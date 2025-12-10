@@ -66,38 +66,35 @@ const Editor = () => {
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 2,
+                scale: 1, // Use a scale of 1 to capture at native resolution
                 useCORS: true,
+                logging: false,
             });
-            const imgData = canvas.toDataURL('image/png');
             
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            const canvasAspectRatio = canvas.width / canvas.height;
             
-            const finalHeight = pdfWidth / canvasAspectRatio;
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const canvasAspectRatio = canvasWidth / canvasHeight;
 
-            let currentHeight = 0;
-            const pageHeight = pdf.internal.pageSize.height;
+            // Calculate the height of the image in the PDF to maintain aspect ratio
+            const imgHeight = pdfWidth / canvasAspectRatio;
+            let heightLeft = imgHeight;
 
-            while(currentHeight < canvas.height){
-                const pageCanvas = document.createElement('canvas');
-                pageCanvas.width = canvas.width;
-                pageCanvas.height = pageHeight * (canvas.width/pdfWidth)
-                const pageCtx = pageCanvas.getContext('2d');
-                if(!pageCtx) continue;
-                
-                pageCtx.drawImage(canvas, 0, currentHeight, canvas.width, pageCanvas.height, 0, 0, pageCanvas.width, pageCanvas.height);
+            let position = 0;
+            
+            pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeight);
+            heightLeft -= pdfHeight;
 
-                const pageImgData = pageCanvas.toDataURL('image/png');
-                if(currentHeight > 0){
-                    pdf.addPage();
-                }
-                pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pageHeight);
-                currentHeight += pageCanvas.height;
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeight);
+                heightLeft -= pdfHeight;
             }
-
+            
             pdf.save(`${selectedTemplate.id}-document.pdf`);
 
             setStats(prevStats => ({
@@ -131,7 +128,7 @@ const Editor = () => {
             <section className="space-y-6">
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex items-center gap-4">
-                        <Select onValueChange={handleTemplateChange} defaultValue={selectedTemplate.id}>
+                        <Select onValuechange={handleTemplateChange} defaultValue={selectedTemplate.id}>
                             <SelectTrigger className="w-[200px] bg-card">
                                 <SelectValue placeholder="Select a template" />
                             </SelectTrigger>
