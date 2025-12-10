@@ -7,13 +7,13 @@ const BackgroundParticles = () => {
   const sketchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !sketchRef.current) {
+    if (!sketchRef.current) {
       return;
     }
 
     const sketch = (p: p5) => {
       let particles: Particle[] = [];
-      const numParticles = typeof window !== 'undefined' && window.innerWidth < 768 ? 25 : 50;
+      const numParticles = window.innerWidth < 768 ? 25 : 50;
 
       class Particle {
         pos: p5.Vector;
