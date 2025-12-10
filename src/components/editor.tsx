@@ -14,7 +14,6 @@ import StylePanel from './style-panel';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { saveAs } from 'file-saver';
-import htmlToDocx from 'html-to-docx';
 
 
 const DEFAULT_MARKDOWN = `# Welcome to Markdwn2PDF!
@@ -70,7 +69,7 @@ const Editor = () => {
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 2, // Increased scale for better quality
+                scale: 1.5,
                 useCORS: true,
                 logging: false,
             });
@@ -81,35 +80,24 @@ const Editor = () => {
             
             const canvasWidth = canvas.width;
             const canvasHeight = canvas.height;
-            const canvasAspectRatio = canvasWidth / canvasHeight;
-            const imgHeight = pdfWidth / canvasAspectRatio;
-
+            
+            const ratio = canvasWidth/canvasHeight;
+            const imgHeight = pdfWidth / ratio;
+            let heightLeft = imgHeight;
             let position = 0;
+
             const pageData = canvas.toDataURL('image/png', 1.0);
             
-            if (imgHeight < pdfHeight) {
-                 pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight);
+            if (heightLeft < pdfHeight) {
+                pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight);
             } else {
-                let heightLeft = canvasHeight;
-                let y = 0;
-
-                while (heightLeft > 0) {
-                    const pageCanvas = document.createElement('canvas');
-                    const pageHeight = Math.min(canvasWidth * (pdfHeight / pdfWidth), heightLeft);
-                    pageCanvas.width = canvasWidth;
-                    pageCanvas.height = pageHeight;
-                    const ctx = pageCanvas.getContext('2d');
-                    ctx?.drawImage(canvas, 0, y, canvasWidth, pageHeight, 0, 0, canvasWidth, pageHeight);
-
-                    const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
-                    const pdfPageHeight = (pageCanvas.height * pdfWidth) / pageCanvas.width;
-                    if (y > 0) {
+                while(heightLeft > 0) {
+                    pdf.addImage(pageData, 'PNG', 0, position, pdfWidth, imgHeight);
+                    heightLeft -= pdfHeight;
+                    position -= pdfHeight;
+                    if (heightLeft > 0) {
                         pdf.addPage();
                     }
-                    pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdfPageHeight);
-                    
-                    heightLeft -= pageHeight;
-                    y += pageHeight;
                 }
             }
             
@@ -165,35 +153,6 @@ const Editor = () => {
         saveAs(blob, 'document.md');
     };
 
-    const handleDownloadDocx = async () => {
-        if (!previewRef.current) return;
-
-        const htmlString = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <style>
-                ${selectedTemplate.styles}
-                ${customStyles}
-            </style>
-            </head>
-            <body>
-                ${previewRef.current.innerHTML}
-            </body>
-            </html>
-        `;
-
-        try {
-            const fileBuffer = await htmlToDocx(htmlString, undefined, {
-                font: 'Arial',
-                fontSize: 12,
-            });
-            saveAs(fileBuffer as Blob, 'document.docx');
-        } catch (error) {
-            console.error('Error generating DOCX:', error);
-        }
-    };
-
     return (
         <>
             <style>
@@ -241,10 +200,6 @@ const Editor = () => {
                                 <DropdownMenuItem onClick={handleDownloadMarkdown}>
                                     <Download className="mr-2 h-4 w-4" />
                                     Download .md
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={handleDownloadDocx}>
-                                    <Download className="mr-2 h-4 w-4" />
-                                    Download .docx
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
