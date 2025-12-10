@@ -43,8 +43,12 @@
     "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "genkit": "^1.20.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "lucide-react": "^0.475.0",
+    "marked": "^13.0.2",
     "next": "^15.3.6",
+    "p5": "^1.9.4",
     "patch-package": "^8.0.0",
     "react": "^19.2.1",
     "react-day-picker": "^9.11.3",
@@ -56,7 +60,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/marked": "^6.0.0",
     "@types/node": "^20",
+    "@types/p5": "^1.7.6",
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.1",
     "genkit-cli": "^1.20.0",
