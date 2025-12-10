@@ -7,11 +7,15 @@ import html2canvas from 'html2canvas';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Settings, Loader } from 'lucide-react';
+import { Download, Settings, Loader, Printer, ChevronDown } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { templates, PdfTemplate } from '@/lib/templates';
 import StylePanel from './style-panel';
 import { useLocalStorage } from '@/hooks/use-local-storage';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { saveAs } from 'file-saver';
+import htmlToDocx from 'html-to-docx';
+
 
 const DEFAULT_MARKDOWN = `# Welcome to Markdwn2PDF!
 
@@ -66,7 +70,7 @@ const Editor = () => {
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 1, // Use a scale of 1 to capture at native resolution
+                scale: 2, // Increased scale for better quality
                 useCORS: true,
                 logging: false,
             });
@@ -78,21 +82,35 @@ const Editor = () => {
             const canvasWidth = canvas.width;
             const canvasHeight = canvas.height;
             const canvasAspectRatio = canvasWidth / canvasHeight;
-
-            // Calculate the height of the image in the PDF to maintain aspect ratio
             const imgHeight = pdfWidth / canvasAspectRatio;
-            let heightLeft = imgHeight;
 
             let position = 0;
+            const pageData = canvas.toDataURL('image/png', 1.0);
             
-            pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeight);
-            heightLeft -= pdfHeight;
+            if (imgHeight < pdfHeight) {
+                 pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight);
+            } else {
+                let heightLeft = canvasHeight;
+                let y = 0;
 
-            while (heightLeft > 0) {
-                position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeight);
-                heightLeft -= pdfHeight;
+                while (heightLeft > 0) {
+                    const pageCanvas = document.createElement('canvas');
+                    const pageHeight = Math.min(canvasWidth * (pdfHeight / pdfWidth), heightLeft);
+                    pageCanvas.width = canvasWidth;
+                    pageCanvas.height = pageHeight;
+                    const ctx = pageCanvas.getContext('2d');
+                    ctx?.drawImage(canvas, 0, y, canvasWidth, pageHeight, 0, 0, canvasWidth, pageHeight);
+
+                    const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
+                    const pdfPageHeight = (pageCanvas.height * pdfWidth) / pageCanvas.width;
+                    if (y > 0) {
+                        pdf.addPage();
+                    }
+                    pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pdfPageHeight);
+                    
+                    heightLeft -= pageHeight;
+                    y += pageHeight;
+                }
             }
             
             pdf.save(`${selectedTemplate.id}-document.pdf`);
@@ -117,6 +135,65 @@ const Editor = () => {
         getHtml();
     }, [markdown]);
 
+    const handlePrintPreview = () => {
+        const printContent = previewRef.current?.innerHTML;
+        if (!printContent) return;
+
+        const printWindow = window.open('', '_blank');
+        printWindow?.document.write(`
+            <html>
+                <head>
+                    <title>Print Preview</title>
+                    <style>
+                        ${selectedTemplate.styles}
+                        ${customStyles}
+                        @media print {
+                            body { -webkit-print-color-adjust: exact; }
+                        }
+                    </style>
+                </head>
+                <body onload="window.print();window.close()">
+                    <div class="preview-container">${printContent}</div>
+                </body>
+            </html>
+        `);
+        printWindow?.document.close();
+    };
+
+    const handleDownloadMarkdown = () => {
+        const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+        saveAs(blob, 'document.md');
+    };
+
+    const handleDownloadDocx = async () => {
+        if (!previewRef.current) return;
+
+        const htmlString = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <style>
+                ${selectedTemplate.styles}
+                ${customStyles}
+            </style>
+            </head>
+            <body>
+                ${previewRef.current.innerHTML}
+            </body>
+            </html>
+        `;
+
+        try {
+            const fileBuffer = await htmlToDocx(htmlString, undefined, {
+                font: 'Arial',
+                fontSize: 12,
+            });
+            saveAs(fileBuffer as Blob, 'document.docx');
+        } catch (error) {
+            console.error('Error generating DOCX:', error);
+        }
+    };
+
     return (
         <>
             <style>
@@ -128,7 +205,7 @@ const Editor = () => {
             <section className="space-y-6">
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex items-center gap-4">
-                        <Select onValuechange={handleTemplateChange} defaultValue={selectedTemplate.id}>
+                        <Select onValueChange={handleTemplateChange} defaultValue={selectedTemplate.id}>
                             <SelectTrigger className="w-[200px] bg-card">
                                 <SelectValue placeholder="Select a template" />
                             </SelectTrigger>
@@ -145,10 +222,33 @@ const Editor = () => {
                             <span className="sr-only">Customize Styles</span>
                         </Button>
                     </div>
-                    <Button onClick={generatePdf} disabled={isGenerating} className="min-w-[150px]">
-                        {isGenerating ? <Loader className="animate-spin mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
-                        {isGenerating ? 'Generating...' : 'Download PDF'}
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <Button onClick={generatePdf} disabled={isGenerating} className="min-w-[150px]">
+                            {isGenerating ? <Loader className="animate-spin mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
+                            {isGenerating ? 'Generating...' : 'Download PDF'}
+                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="icon">
+                                    <ChevronDown className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={handlePrintPreview}>
+                                    <Printer className="mr-2 h-4 w-4" />
+                                    Print Preview
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleDownloadMarkdown}>
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Download .md
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleDownloadDocx}>
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Download .docx
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 min-h-[70vh]">
