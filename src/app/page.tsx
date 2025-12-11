@@ -15,6 +15,9 @@ export default function Home() {
           <aside className="col-span-12 lg:col-span-2 hidden lg:block space-y-8">
             <AdPlaceholder />
             <AdPlaceholder />
+            <AdPlaceholder />
+            <AdPlaceholder />
+            <AdPlaceholder />
           </aside>
           <main className="col-span-12 lg:col-span-8">
             <Hero />
@@ -29,6 +32,9 @@ export default function Home() {
             <StatsDashboard />
           </main>
           <aside className="col-span-12 lg:col-span-2 hidden lg:block space-y-8">
+            <AdPlaceholder />
+            <AdPlaceholder />
+            <AdPlaceholder />
             <AdPlaceholder />
             <AdPlaceholder />
           </aside>
