@@ -16,33 +16,37 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { saveAs } from 'file-saver';
 import { VideoAdModal } from './video-ad-modal';
 
-const DEFAULT_MARKDOWN = `# Welcome to Markdwn2PDF!
+const DEFAULT_MARKDOWN = `# Your Ultimate Markdown to PDF Converter
 
-This is a live Markdown editor. Your changes will be reflected in the preview pane on the right.
+Welcome to the best free tool to **convert Markdown to PDF online**. This live editor provides a real-time preview, so you can see your changes instantly. Whether you're a student, a developer, or a professional, our tool makes creating high-quality documents effortless.
 
-## Features
+## How to Convert Markdown to PDF?
 
-- **Real-time Preview**: See your rendered HTML as you type.
-- **PDF Export**: Convert your Markdown to a PDF with one click.
-- **Templates**: Choose from different styles for your PDF.
-- **AI Styling**: Use the settings icon to intelligently customize your document.
+1.  **Write or Paste**: Simply type your Markdown text in this editor, or paste it from another source.
+2.  **Style It**: Choose from our professional PDF templates like 'Minimal Clean' or 'Academic Paper'.
+3.  **Customize**: Use the AI Styling panel (the settings icon) to customize fonts, colors, and more.
+4.  **Download**: Click "Download PDF" to get your beautifully formatted document.
 
-### Code Blocks
-\`\`\`javascript
-function greet() {
-  console.log("Hello, world!");
-}
+### Core Features
+
+-   **Free Markdown to PDF Converter**: No sign-up required for basic use.
+-   **Live Markdown Preview**: Your HTML output updates as you type.
+-   **Professional PDF Templates**: Create documents for business, academic, or personal use.
+-   **AI-Powered Custom Styling**: Get help creating the perfect look for your PDF.
+
+### Example: A Simple Code Block
+
+Here's how to write a code block in Markdown, perfect for technical documentation.
+
+\`\`\`python
+# A simple Python function to convert Markdown
+def convert_markdown_to_pdf(markdown_text):
+    # This is a dummy function
+    print("Converting your Markdown to a professional PDF...")
+    return "document.pdf"
 \`\`\`
 
-### Lists
-1. First item
-2. Second item
-3. Third item
-
-- Unordered item
-- Another one
-
-> Blockquote: Start typing in the editor to see the magic happen!
+> Blockquote: This is an excellent tool for anyone wondering how to export a markdown file as a styled PDF. Start typing to see the magic happen!
 `;
 
 const Editor = () => {
@@ -74,7 +78,7 @@ const Editor = () => {
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 1, // Use scale 1 for better font rendering
+                scale: 2, // Increased scale for better resolution
                 useCORS: true,
                 logging: false,
             });
@@ -83,27 +87,22 @@ const Editor = () => {
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
             
-            const canvasWidth = canvas.width;
-            const canvasHeight = canvas.height;
-            
-            const ratio = canvasWidth/canvasHeight;
-            let imgHeight = pdfWidth / ratio;
+            const imgData = canvas.toDataURL('image/png');
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgWidth = pdfWidth;
+            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
             let heightLeft = imgHeight;
             let position = 0;
 
-            const pageData = canvas.toDataURL('image/png', 0.95);
-            
-            if (imgHeight < pdfHeight) {
-                pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight, undefined, 'FAST');
-            } else {
-                while(heightLeft > 0) {
-                    pdf.addImage(pageData, 'PNG', 0, position, pdfWidth, imgHeight, undefined, 'FAST');
-                    heightLeft -= pdfHeight;
-                    position -= pdfHeight;
-                    if (heightLeft > 0) {
-                        pdf.addPage();
-                    }
-                }
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, undefined, 'FAST');
+            heightLeft -= pdfHeight;
+
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+                heightLeft -= pdfHeight;
             }
             
             pdf.save(`${selectedTemplate.id}-document.pdf`);
