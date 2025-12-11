@@ -1,4 +1,4 @@
-import { Check, Annoyed } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from './ui/card';
 import { cn } from '@/lib/utils';
@@ -26,36 +26,16 @@ const tiers = [
         priceDetails: "/month",
         features: [
             "Up to 100 conversions per month",
-            "All standard templates (15+)",
+            "All premium templates (25+)",
             "High-quality PDF output",
             "No watermarks",
             "Custom styling options",
             "50MB file size limit",
             "Priority email support",
-            "Basic analytics",
             "Ad-free experience",
         ],
         cta: "Upgrade Now",
         isPopular: true,
-    },
-    {
-        name: "Team",
-        price: "$29",
-        priceDetails: "/month",
-        features: [
-            "Up to 500 conversions per month",
-            "All premium templates (25+)",
-            "Ultra-high quality PDF",
-            "Team collaboration (up to 5 users)",
-            "Batch processing (up to 10 files)",
-            "Custom templates",
-            "200MB file size limit",
-            "Priority support + chat",
-            "Advanced analytics",
-            "API access (limited)",
-        ],
-        cta: "Choose Team",
-        isPopular: false,
     },
     {
         name: "Enterprise",
@@ -90,7 +70,7 @@ const Pricing = () => {
                 <div className="mt-4 text-sm text-muted-foreground">Annual billing saves you 25%</div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                 {tiers.map((tier) => (
                     <Card key={tier.name} className={cn("flex flex-col shadow-lg", tier.isPopular ? 'border-primary ring-2 ring-primary' : '')}>
                          {tier.isPopular && (
