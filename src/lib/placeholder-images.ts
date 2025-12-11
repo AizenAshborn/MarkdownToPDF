@@ -1,10 +1,13 @@
 import data from './placeholder-images.json';
 
-export type ImagePlaceholder = {
+export type PlaceholderAd = {
   id: string;
-  description: string;
+  advertiser: string;
+  title: string;
   imageUrl: string;
   imageHint: string;
+  ctaText: string;
+  href: string;
 };
 
-export const PlaceHolderImages: ImagePlaceholder[] = data.placeholderImages;
+export const placeholderAds: PlaceholderAd[] = data.ads;

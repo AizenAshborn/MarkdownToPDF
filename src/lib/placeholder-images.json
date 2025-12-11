@@ -1,3 +1,67 @@
 {
-  "placeholderImages": []
+  "ads": [
+    {
+      "id": "temu-ad-1",
+      "advertiser": "Temu",
+      "title": "Shop Like a Billionaire",
+      "imageUrl": "https://picsum.photos/seed/temu1/300/250",
+      "imageHint": "shopping product",
+      "ctaText": "Shop Now",
+      "href": "#"
+    },
+    {
+      "id": "amazon-ad-1",
+      "advertiser": "Amazon",
+      "title": "Deals Delivered to Your Door",
+      "imageUrl": "https://picsum.photos/seed/amazon1/300/250",
+      "imageHint": "delivery box",
+      "ctaText": "Explore Deals",
+      "href": "#"
+    },
+    {
+      "id": "game-ad-1",
+      "advertiser": "Google Play",
+      "title": "New Epic Adventure Awaits!",
+      "imageUrl": "https://picsum.photos/seed/game1/300/250",
+      "imageHint": "fantasy game",
+      "ctaText": "Play Now",
+      "href": "#"
+    },
+    {
+      "id": "facebook-ad-1",
+      "advertiser": "Facebook",
+      "title": "Connect with Your World",
+      "imageUrl": "https://picsum.photos/seed/facebook1/300/250",
+      "imageHint": "social media",
+      "ctaText": "Join Now",
+      "href": "#"
+    },
+    {
+      "id": "temu-ad-2",
+      "advertiser": "Temu",
+      "title": "Unbeatable Prices, Every Day",
+      "imageUrl": "https://picsum.photos/seed/temu2/300/250",
+      "imageHint": "fashion product",
+      "ctaText": "Discover More",
+      "href": "#"
+    },
+    {
+      "id": "main-content-ad",
+      "advertiser": "Amazon Web Services",
+      "title": "Build and Deploy with the Cloud",
+      "imageUrl": "https://picsum.photos/seed/aws1/900/120",
+      "imageHint": "cloud computing",
+      "ctaText": "Learn More",
+      "href": "#"
+    },
+    {
+      "id": "footer-ad-1",
+      "advertiser": "Grammarly",
+      "title": "Write with Confidence",
+      "imageUrl": "https://picsum.photos/seed/grammarly1/1200/150",
+      "imageHint": "writing grammar",
+      "ctaText": "Try for Free",
+      "href": "#"
+    }
+  ]
 }
