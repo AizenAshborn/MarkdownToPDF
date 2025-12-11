@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Markdwn2PDF',
+  title: 'MarkdownToPDF.ca',
   description: 'Convert Markdown to professional PDFs with ease.',
 };
 

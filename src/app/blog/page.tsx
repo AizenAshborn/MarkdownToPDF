@@ -45,7 +45,7 @@ const blogPosts = [
    {
     id: 'advanced-styling',
     title: 'Advanced PDF Styling with AI',
-    description: 'Explore how Markdwn2PDF uses AI to give you fine-grained control over the look and feel of your documents.',
+    description: 'Explore how MarkdownToPDF.ca uses AI to give you fine-grained control over the look and feel of your documents.',
     author: 'Chris Green',
     date: 'October 18, 2023',
     readTime: '6 min read',
@@ -66,7 +66,7 @@ export default function BlogPage() {
       <main className="flex-1 container mx-auto px-4 py-8 md:py-12">
         <div className="text-center mb-12">
           <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tight mb-4">
-            The Markdwn2PDF Blog
+            The MarkdownToPDF.ca Blog
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Tips, tricks, and insights on document creation, productivity, and design.
