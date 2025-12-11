@@ -25,7 +25,7 @@ const tiers = [
         price: "$9",
         priceDetails: "/month",
         features: [
-            "Up to 100 conversions per month",
+            "Unlimited conversions",
             "All premium templates (25+)",
             "High-quality PDF output",
             "No watermarks",
