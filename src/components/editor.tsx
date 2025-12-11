@@ -7,14 +7,14 @@ import html2canvas from 'html2canvas';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Settings, Loader, Printer, ChevronDown } from 'lucide-react';
+import { Download, Settings, Loader, Printer, ChevronDown, FileDown } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { templates, PdfTemplate } from '@/lib/templates';
 import StylePanel from './style-panel';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { saveAs } from 'file-saver';
-
+import { VideoAdModal } from './video-ad-modal';
 
 const DEFAULT_MARKDOWN = `# Welcome to Markdwn2PDF!
 
@@ -52,6 +52,7 @@ const Editor = () => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [isStylePanelOpen, setIsStylePanelOpen] = useState(false);
     const [stats, setStats] = useLocalStorage('template-stats', {});
+    const [isAdModalOpen, setIsAdModalOpen] = useState(false);
 
     const previewRef = useRef<HTMLDivElement>(null);
 
@@ -64,12 +65,16 @@ const Editor = () => {
         setSelectedTemplate(template);
     };
 
+    const startPdfGeneration = () => {
+        setIsAdModalOpen(true);
+    };
+
     const generatePdf = async () => {
         if (!previewRef.current) return;
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 1.5,
+                scale: 1, // Use scale 1 for better font rendering
                 useCORS: true,
                 logging: false,
             });
@@ -82,17 +87,17 @@ const Editor = () => {
             const canvasHeight = canvas.height;
             
             const ratio = canvasWidth/canvasHeight;
-            const imgHeight = pdfWidth / ratio;
+            let imgHeight = pdfWidth / ratio;
             let heightLeft = imgHeight;
             let position = 0;
 
-            const pageData = canvas.toDataURL('image/png', 1.0);
+            const pageData = canvas.toDataURL('image/png', 0.95);
             
-            if (heightLeft < pdfHeight) {
-                pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight);
+            if (imgHeight < pdfHeight) {
+                pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, imgHeight, undefined, 'FAST');
             } else {
                 while(heightLeft > 0) {
-                    pdf.addImage(pageData, 'PNG', 0, position, pdfWidth, imgHeight);
+                    pdf.addImage(pageData, 'PNG', 0, position, pdfWidth, imgHeight, undefined, 'FAST');
                     heightLeft -= pdfHeight;
                     position -= pdfHeight;
                     if (heightLeft > 0) {
@@ -182,7 +187,7 @@ const Editor = () => {
                         </Button>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button onClick={generatePdf} disabled={isGenerating} className="min-w-[150px]">
+                        <Button onClick={startPdfGeneration} disabled={isGenerating} className="min-w-[150px]">
                             {isGenerating ? <Loader className="animate-spin mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
                             {isGenerating ? 'Generating...' : 'Download PDF'}
                         </Button>
@@ -198,7 +203,7 @@ const Editor = () => {
                                     Print Preview
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={handleDownloadMarkdown}>
-                                    <Download className="mr-2 h-4 w-4" />
+                                    <FileDown className="mr-2 h-4 w-4" />
                                     Download .md
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -232,6 +237,11 @@ const Editor = () => {
                     setIsOpen={setIsStylePanelOpen}
                     baseTemplate={selectedTemplate}
                     onStylesGenerated={setCustomStyles}
+                />
+                <VideoAdModal
+                    isOpen={isAdModalOpen}
+                    onClose={() => setIsAdModalOpen(false)}
+                    onAdFinished={generatePdf}
                 />
             </section>
         </>
