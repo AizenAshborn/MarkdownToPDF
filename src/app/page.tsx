@@ -27,11 +27,11 @@ export default function Home() {
             <div className="my-8">
               {mainContentAd && <SimulatedAd {...mainContentAd} />}
             </div>
-            <Pricing />
             <Editor />
             <div className="my-8">
                {mainContentAd && <SimulatedAd {...mainContentAd} />}
             </div>
+            <Pricing />
             <StatsDashboard />
           </main>
           <aside className="col-span-12 lg:col-span-2 hidden lg:block space-y-8">
