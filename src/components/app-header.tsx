@@ -18,6 +18,9 @@ const AppHeader = () => {
           <Button variant="ghost" asChild>
             <Link href="/docs">Docs</Link>
           </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/cheatsheet">Cheatsheet</Link>
+          </Button>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Button variant="ghost" size="icon" asChild>
