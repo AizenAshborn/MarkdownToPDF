@@ -8,7 +8,7 @@ const AppHeader = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <Link href="/" className="flex items-center space-x-2 mr-6">
-          <Image src="/logo.png" alt="Logo" width={32} height={32} className="rounded-md" />
+          <Image src="/logo.png" alt="Logo" width={32} height={32} />
           <span className="font-bold font-headline text-xl">MarkdownPDFConverter.com</span>
         </Link>
         <nav className="flex items-center space-x-1">
