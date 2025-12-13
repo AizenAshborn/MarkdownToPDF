@@ -38,7 +38,7 @@ export default function Home() {
               <div className="text-xs font-bold text-muted-foreground text-center mb-2">SPONSORED</div>
 
               {/* Fallback Display until AdSense is approved */}
-              <Link href="/advertise" className="block group relative overflow-hidden rounded-lg border border-border/50 transition-all hover:border-primary/50">
+              {/* <Link href="/advertise" className="block group relative overflow-hidden rounded-lg border border-border/50 transition-all hover:border-primary/50">
                 <div className="aspect-[300/600] w-full bg-muted flex flex-col items-center justify-center p-6 text-center space-y-4">
                   <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <span className="text-2xl">📢</span>
@@ -49,7 +49,7 @@ export default function Home() {
                   </div>
                   <span className="text-xs font-medium text-primary underline decoration-dotted underline-offset-4">View Media Kit</span>
                 </div>
-              </Link>
+              </Link> */}
 
               {/* Once AdSense is ready, uncomment this and add real Slot ID:
               <AdUnit
@@ -59,6 +59,13 @@ export default function Home() {
                 style={{ height: '600px' }}
               /> 
               */}
+              {/* Sidebar Left Ad Unit */}
+              <AdUnit
+                slotId="9175625706"
+                placeholderProps={sidebarAds[0]}
+                format="auto"
+                style={{ display: 'block' }}
+              />
             </div>
           </aside>
 
