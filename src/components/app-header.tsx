@@ -19,7 +19,14 @@ const AppHeader = () => {
             <Link href="/docs">Docs</Link>
           </Button>
           <Button variant="ghost" asChild>
-            <Link href="/cheatsheet">Cheatsheet</Link>
+            <Link href="/cheatsheet" className="text-sm font-medium hover:text-primary transition-colors">
+              Cheatsheet
+            </Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/pdf-to-markdown" className="text-sm font-medium text-primary hover:underline transition-colors">
+              PDF → MD
+            </Link>
           </Button>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
