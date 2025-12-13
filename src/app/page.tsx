@@ -35,18 +35,30 @@ export default function Home() {
           {/* Left Sidebar Ads */}
           <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
             <div className="sticky top-20">
-              <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
+              <div className="text-xs font-bold text-muted-foreground text-center mb-2">SPONSORED</div>
+
+              {/* Fallback Display until AdSense is approved */}
+              <Link href="/advertise" className="block group relative overflow-hidden rounded-lg border border-border/50 transition-all hover:border-primary/50">
+                <div className="aspect-[300/600] w-full bg-muted flex flex-col items-center justify-center p-6 text-center space-y-4">
+                  <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <span className="text-2xl">📢</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground">Your Ad Here</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Reach thousands of developers and writers daily.</p>
+                  </div>
+                  <span className="text-xs font-medium text-primary underline decoration-dotted underline-offset-4">View Media Kit</span>
+                </div>
+              </Link>
+
+              {/* Once AdSense is ready, uncomment this and add real Slot ID:
               <AdUnit
                 slotId="1234567890"
                 placeholderProps={sidebarAds[0]}
                 format="rectangle"
                 style={{ height: '600px' }}
-              />
-              <div className="text-center mt-2">
-                <Link href="/advertise" className="text-[10px] text-muted-foreground hover:underline">
-                  Advertise Here
-                </Link>
-              </div>
+              /> 
+              */}
             </div>
           </aside>
 
