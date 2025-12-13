@@ -90,6 +90,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
         <meta name="google-site-verification" content="googled0d8e1d4eba1f7f4" />
+        <meta name="google-adsense-account" content="ca-pub-1494650266840512" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1494650266840512"
