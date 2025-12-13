@@ -1,7 +1,6 @@
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import Hero from '@/components/hero';
-import Editor from '@/components/editor';
 import StatsDashboard from '@/components/stats-dashboard';
 import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
@@ -9,6 +8,18 @@ import FaqSection from '@/components/faq-section';
 
 import { SimulatedAd } from '@/components/simulated-ad';
 import { placeholderAds } from '@/lib/placeholder-images';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const Editor = dynamic(() => import('@/components/editor'), {
+  ssr: false,
+  loading: () => (
+    <div className="grid md:grid-cols-2 gap-6 min-h-[70vh] p-6">
+      <Skeleton className="h-[600px] w-full rounded-xl" />
+      <Skeleton className="h-[600px] w-full rounded-xl" />
+    </div>
+  )
+});
 
 export default function Home() {
   const sidebarAds = placeholderAds.slice(0, 5);
