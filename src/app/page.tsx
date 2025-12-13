@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import Hero from '@/components/hero';
@@ -39,6 +40,11 @@ export default function Home() {
                 format="rectangle"
                 style={{ height: '600px' }}
               />
+              <div className="text-center mt-2">
+                <Link href="/advertise" className="text-[10px] text-muted-foreground hover:underline">
+                  Advertise Here
+                </Link>
+              </div>
             </div>
           </aside>
 

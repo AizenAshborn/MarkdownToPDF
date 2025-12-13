@@ -56,7 +56,13 @@ const AppFooter = ({ ad }: AppFooterProps) => {
                                 <span className="sr-only">Twitter</span>
                             </Link>
                         </div>
-                        <p className="text-xs text-muted-foreground pt-2">
+                        <p className="text-sm text-muted-foreground">
+                            Built for developers, writers, and students. 100% Free & Private.
+                            <br />
+                            <Link href="/advertise" className="underline underline-offset-4 hover:text-primary">
+                                Advertise with us
+                            </Link>
+                            <br />
                             © {new Date().getFullYear()} MarkdownPDFConverter. All rights reserved.
                         </p>
                     </div>
