@@ -1,8 +1,6 @@
 'use server';
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
-// @ts-ignore
-import pdf from 'pdf-parse';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENAI_API_KEY || '');
 
@@ -11,6 +9,9 @@ export async function convertPdfToMarkdown(base64Pdf: string): Promise<string> {
         // Fallback: Gemini 1.5 might not be enabled for this key. 
         // We will extract text manually using pdf-parse and send TEXT to gemini-pro (1.0).
         // This is more robust for older keys.
+
+        // @ts-ignore
+        const pdf = require('pdf-parse');
 
         const buffer = Buffer.from(base64Pdf, 'base64');
         const pdfData = await pdf(buffer);
