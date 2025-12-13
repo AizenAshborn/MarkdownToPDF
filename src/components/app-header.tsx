@@ -11,23 +11,23 @@ const AppHeader = () => {
           <Image src="/logo.png" alt="Logo" width={32} height={32} />
           <span className="font-bold font-headline text-xl">MarkdownPDFConverter.com</span>
         </Link>
-        <nav className="flex items-center space-x-1">
-          <Button variant="ghost" asChild>
-            <Link href="/blog">Blog</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/docs">Docs</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/cheatsheet" className="text-sm font-medium hover:text-primary transition-colors">
-              Cheatsheet
-            </Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/pdf-to-markdown" className="text-sm font-medium text-primary hover:underline transition-colors">
-              PDF → MD
-            </Link>
-          </Button>
+        <nav className="flex items-center space-x-4 ml-6">
+          <Link href="/pdf-to-markdown" className="font-bold font-headline text-lg sm:text-xl text-primary hover:underline transition-colors shrink-0">
+            PDF → MD
+          </Link>
+          <div className="flex items-center space-x-1">
+            <Button variant="ghost" asChild className="hidden sm:inline-flex">
+              <Link href="/blog">Blog</Link>
+            </Button>
+            <Button variant="ghost" asChild className="hidden sm:inline-flex">
+              <Link href="/docs">Docs</Link>
+            </Button>
+            <Button variant="ghost" asChild className="hidden md:inline-flex">
+              <Link href="/cheatsheet" className="text-sm font-medium hover:text-primary transition-colors">
+                Cheatsheet
+              </Link>
+            </Button>
+          </div>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Button variant="ghost" size="icon" asChild>
