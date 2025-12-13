@@ -11,9 +11,11 @@ type VideoAdModalProps = {
   onClose: () => void;
   onAdFinished: () => void;
   adSlotId?: string;
+  title?: string;
+  description?: string;
 };
 
-export const VideoAdModal = ({ isOpen, onClose, onAdFinished, adSlotId }: VideoAdModalProps) => {
+export const VideoAdModal = ({ isOpen, onClose, onAdFinished, adSlotId, title, description }: VideoAdModalProps) => {
   const [countdown, setCountdown] = useState(5);
   const [isReady, setIsReady] = useState(false);
 
@@ -44,9 +46,9 @@ export const VideoAdModal = ({ isOpen, onClose, onAdFinished, adSlotId }: VideoA
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md bg-card" onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Converting Document...</DialogTitle>
+          <DialogTitle>{title || "Converting Document..."}</DialogTitle>
           <DialogDescription>
-            Please wait while we process your PDF using AI.
+            {description || "Please wait while we process your PDF using AI."}
           </DialogDescription>
         </DialogHeader>
 

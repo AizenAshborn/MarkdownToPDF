@@ -15,8 +15,9 @@ import { VideoAdModal } from '@/components/video-ad-modal';
 export default function PdfToMarkdownPage() {
     const [file, setFile] = useState<File | null>(null);
     const [isConverting, setIsConverting] = useState(false);
-    const [result, setResult] = useState<string>('');
+    const [result, setResult] = useState<string | null>(null);
     const [isAdOpen, setIsAdOpen] = useState(false);
+    const [isDownloadAdOpen, setIsDownloadAdOpen] = useState(false);
     const { toast } = useToast();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ export default function PdfToMarkdownPage() {
     const performConversion = async () => {
         if (!file) return;
         setIsConverting(true);
-        setResult('');
+        setResult(null); // Changed from '' to null
         setIsAdOpen(false); // Close ad if not already closed
 
         try {
@@ -79,14 +80,20 @@ export default function PdfToMarkdownPage() {
     };
 
     const copyToClipboard = () => {
+        if (!result) return;
         navigator.clipboard.writeText(result);
         toast({ title: "Copied!", description: "Markdown copied to clipboard." });
     };
 
-    const handleDownload = () => {
+    const executeDownload = () => {
+        if (!result) return;
         const blob = new Blob([result], { type: 'text/markdown;charset=utf-8' });
         saveAs(blob, 'converted.md');
         toast({ title: "Downloaded!", description: "File saved as converted.md" });
+    };
+
+    const handleDownload = () => {
+        setIsDownloadAdOpen(true);
     };
 
     return (
@@ -180,7 +187,21 @@ export default function PdfToMarkdownPage() {
                     isOpen={isAdOpen}
                     onClose={() => setIsAdOpen(false)}
                     onAdFinished={performConversion}
-                    adSlotId="5044809000"
+                    adSlotId="3267681148"
+                    title="Converting Document..."
+                    description="Please wait while our AI analyzes your file."
+                />
+
+                <VideoAdModal
+                    isOpen={isDownloadAdOpen}
+                    onClose={() => setIsDownloadAdOpen(false)}
+                    onAdFinished={() => {
+                        setIsDownloadAdOpen(false);
+                        executeDownload();
+                    }}
+                    adSlotId="7615132026"
+                    title="Preparing Download..."
+                    description="Your file is being generated. Download will start shortly."
                 />
 
                 <article className="prose dark:prose-invert max-w-none mt-24 border-t pt-12">

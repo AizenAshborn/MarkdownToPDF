@@ -1,38 +1,19 @@
-# AdSense Configuration Guide
+# AdSense Configuration Record
 
-You are currently on the right track! The screen you shared is where you create **Manual Ad Units**.
+## Publisher ID
+`ca-pub-1494650266840512`
 
-## Why create manual units?
-While "Auto Ads" are great, Manual Units allow us to place ads in specific high-value spots, like the Sidebars and Top Banner we designed.
+## Ad Units Map
 
-## How to setup:
+| Location | Name | Slot ID | Format |
+| :--- | :--- | :--- | :--- |
+| **Homepage Top** | `homepage_top_banner` | `2665864154` | Horizontal |
+| **Left Sidebar** | `sidebar_left` | `9175625706` | Vertical |
+| **Right Sidebar** | `sidebar_right` | `5044809000` | Vertical |
+| **Footer** | `footer_ad` | `3731727336` | Horizontal |
+| **Convert Popup** | `Video_AD_on_CONVERT` | `3267681148` | Square |
+| **Download Popup** | `video_AD_ondownload` | `7615132026` | Square |
 
-1.  **Click "Display ads"** (Square icon).
-2.  **Name your ad unit**:
-    *   Example: `homepage_sidebar_left`
-    *   Example: `homepage_top_banner`
-3.  **Choose format**:
-    *   For Sidebars: Choose **Vertical** or **Square**.
-    *   For Top Banner: Choose **Horizontal**.
-4.  **Create** and Copy the code.
-5.  Look for `data-ad-slot="1234567890"`. That number is your **Slot ID**.
-
-## Updating the Code
-Once you have the ID, update `src/app/page.tsx`:
-
-```tsx
-// Inside src/app/page.tsx
-
-// 1. Uncomment the AdUnit component
-<AdUnit
-  slotId="YOUR_NEW_SLOT_ID_HERE" // Paste your ID here
-  format="rectangle"
-  ...
-/>
-
-// 2. Remove or comment out the "Your Ad Here" fallback link
-```
-
-## Troubleshooting
-- **Ads showing blank?** New ad units take 30-60 minutes to become active.
-- **Still blank?** Ensure your `ads.txt` is validated in AdSense settings.
+## Notes
+- **Convert Popup** & **Download Popup**: These use a custom "Processing" modal that displays a square ad unit for 5 seconds. This simulates a "Rewarded" ad experience efficiently using standard compliant display ads.
+- **Auto Ads**: Ensure "Vignette" ads are enabled in your AdSense settings for additional mobile full-screen revenue.
