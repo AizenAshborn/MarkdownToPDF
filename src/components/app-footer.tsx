@@ -1,20 +1,25 @@
 
-import { SimulatedAd } from "./simulated-ad";
+import { AdUnit } from "./ad-unit";
 import { PlaceholderAd } from "@/lib/placeholder-images";
 import Link from "next/link";
 import { Github, Twitter } from "lucide-react";
 
 type AppFooterProps = {
     ad?: PlaceholderAd;
+    slotId?: string;
 }
 
-const AppFooter = ({ ad }: AppFooterProps) => {
+const AppFooter = ({ ad, slotId }: AppFooterProps) => {
     return (
         <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 mt-auto">
             {/* Ad Section */}
             <div className="container py-8 flex justify-center">
                 <div className="w-full max-w-4xl">
-                    {ad && <SimulatedAd {...ad} />}
+                    <AdUnit
+                        placeholderProps={ad}
+                        slotId={slotId}
+                        style={{ height: '280px' }}
+                    />
                 </div>
             </div>
 
