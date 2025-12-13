@@ -45,21 +45,34 @@ export default function PdfToMarkdownPage() {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = async () => {
-                const base64 = reader.result?.toString().split(',')[1]; // Remove data URL prefix
-                if (!base64) throw new Error('Failed to read file');
+                try {
+                    const base64 = reader.result?.toString().split(',')[1];
+                    if (!base64) throw new Error('Failed to read file');
 
-                const md = await convertPdfToMarkdown(base64);
-                setResult(md);
+                    const md = await convertPdfToMarkdown(base64);
+                    setResult(md);
 
-                toast({
-                    title: "Conversion Complete!",
-                    description: "Your PDF has been converted to Markdown with AI.",
-                });
+                    toast({
+                        title: "Conversion Complete!",
+                        description: "Your PDF has been converted to Markdown with AI.",
+                    });
+                } catch (innerError: any) {
+                    console.error("Conversion Error:", innerError);
+                    setResult(`# Error\n\n${innerError.message || 'Unknown error occurred during conversion.'}`);
+                    toast({ title: 'Conversion Failed', description: 'See error details below.', variant: 'destructive' });
+                } finally {
+                    setIsConverting(false);
+                }
+            };
+
+            reader.onerror = () => {
+                toast({ title: 'File Read Error', description: 'Failed to read the PDF file.', variant: 'destructive' });
                 setIsConverting(false);
             };
+
         } catch (error) {
             console.error(error);
-            toast({ title: 'Error', description: 'Failed to convert PDF. It might be too large.', variant: 'destructive' });
+            toast({ title: 'Error', description: 'Failed to initiate conversion.', variant: 'destructive' });
             setIsConverting(false);
         }
     };
