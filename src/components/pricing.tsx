@@ -1,7 +1,11 @@
-import { Check } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
+import { Check, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from './ui/card';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 const tiers = [
     {
@@ -19,6 +23,7 @@ const tiers = [
         ],
         cta: "Get Started",
         isPopular: false,
+        stripePriceId: null, // Free plan
     },
     {
         name: "Pro Creator",
@@ -35,10 +40,51 @@ const tiers = [
         ],
         cta: "Upgrade to Pro",
         isPopular: true,
+        // Use environment variable or fallback placeholder. 
+        // User MUST set NEXT_PUBLIC_STRIPE_PRICE_ID_PRO in .env.local
+        stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO,
     },
 ];
 
 const Pricing = () => {
+    const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+    const { toast } = useToast();
+
+    const handleSubscribe = async (tier: typeof tiers[0]) => {
+        if (!tier.stripePriceId) {
+            // Free plan logic (maybe redirect to convert page)
+            const element = document.getElementById('editor');
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+
+        setLoadingPlan(tier.name);
+
+        try {
+            const response = await fetch('/api/stripe/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ priceId: tier.stripePriceId }),
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(text || "Checkout failed");
+            }
+
+            const data = await response.json();
+            window.location.href = data.url;
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "Error",
+                description: "Something went wrong. Please check your Stripe config.",
+                variant: "destructive",
+            });
+            setLoadingPlan(null);
+        }
+    };
+
     return (
         <section id="pricing" className="py-16 md:py-20">
             <div className="text-center mb-12">
@@ -77,8 +123,18 @@ const Pricing = () => {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full" variant={tier.isPopular ? 'default' : 'outline'}>
-                                {tier.cta}
+                            <Button
+                                className="w-full"
+                                variant={tier.isPopular ? 'default' : 'outline'}
+                                onClick={() => handleSubscribe(tier)}
+                                disabled={!!loadingPlan}
+                            >
+                                {loadingPlan === tier.name ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Processing...
+                                    </>
+                                ) : tier.cta}
                             </Button>
                         </CardFooter>
                     </Card>
