@@ -62,6 +62,11 @@ export const metadata: Metadata = {
     canonical: 'https://markdownpdfconverter.com',
   },
   category: 'Technology',
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
