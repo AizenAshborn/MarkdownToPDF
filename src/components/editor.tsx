@@ -53,6 +53,7 @@ const Editor = () => {
     const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
     const [selectedTemplate, setSelectedTemplate] = useState<PdfTemplate>(templates[0]);
     const [customStyles, setCustomStyles] = useState<string>('');
+    const [orientation, setOrientation] = useState<'p' | 'l'>('p');
     const [isGenerating, setIsGenerating] = useState(false);
     const [isStylePanelOpen, setIsStylePanelOpen] = useState(false);
     const [stats, setStats] = useLocalStorage('template-stats', {});
@@ -78,15 +79,15 @@ const Editor = () => {
         setIsGenerating(true);
         try {
             const canvas = await html2canvas(previewRef.current, {
-                scale: 2, // Increased scale for better resolution
+                scale: 2,
                 useCORS: true,
                 logging: false,
             });
-            
-            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            const pdf = new jsPDF(orientation, 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            
+
             const imgData = canvas.toDataURL('image/png');
             const imgProps = pdf.getImageProperties(imgData);
             const imgWidth = pdfWidth;
@@ -104,7 +105,7 @@ const Editor = () => {
                 pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
                 heightLeft -= pdfHeight;
             }
-            
+
             pdf.save(`${selectedTemplate.id}-document.pdf`);
 
             setStats(prevStats => ({
@@ -117,7 +118,7 @@ const Editor = () => {
             setIsGenerating(false);
         }
     };
-    
+
     const [html, setHtml] = useState('');
     useEffect(() => {
         const getHtml = async () => {
@@ -180,7 +181,31 @@ const Editor = () => {
                                 ))}
                             </SelectContent>
                         </Select>
-                         <Button variant="outline" size="icon" onClick={() => setIsStylePanelOpen(true)}>
+
+                        <div className="flex bg-card rounded-md border">
+                            <Button
+                                variant={orientation === 'p' ? 'secondary' : 'ghost'}
+                                size="sm"
+                                className="px-3"
+                                onClick={() => setOrientation('p')}
+                                title="Portrait"
+                            >
+                                <span className="sr-only">Portrait</span>
+                                <div className="h-4 w-3 border-2 border-current rounded-sm" />
+                            </Button>
+                            <Button
+                                variant={orientation === 'l' ? 'secondary' : 'ghost'}
+                                size="sm"
+                                className="px-3"
+                                onClick={() => setOrientation('l')}
+                                title="Landscape"
+                            >
+                                <span className="sr-only">Landscape</span>
+                                <div className="h-3 w-4 border-2 border-current rounded-sm" />
+                            </Button>
+                        </div>
+
+                        <Button variant="outline" size="icon" onClick={() => setIsStylePanelOpen(true)}>
                             <Settings className="h-4 w-4" />
                             <span className="sr-only">Customize Styles</span>
                         </Button>
@@ -231,8 +256,8 @@ const Editor = () => {
                         </CardContent>
                     </Card>
                 </div>
-                 <StylePanel 
-                    isOpen={isStylePanelOpen} 
+                <StylePanel
+                    isOpen={isStylePanelOpen}
                     setIsOpen={setIsStylePanelOpen}
                     baseTemplate={selectedTemplate}
                     onStylesGenerated={setCustomStyles}
