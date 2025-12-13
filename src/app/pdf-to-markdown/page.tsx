@@ -9,11 +9,13 @@ import { Upload, FileText, ArrowRight, Loader2, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { convertPdfToMarkdown } from '@/app/actions/convert-pdf';
 import { Textarea } from '@/components/ui/textarea';
+import { VideoAdModal } from '@/components/video-ad-modal';
 
 export default function PdfToMarkdownPage() {
     const [file, setFile] = useState<File | null>(null);
     const [isConverting, setIsConverting] = useState(false);
     const [result, setResult] = useState<string>('');
+    const [isAdOpen, setIsAdOpen] = useState(false);
     const { toast } = useToast();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +29,16 @@ export default function PdfToMarkdownPage() {
         }
     };
 
-    const handleConvert = async () => {
+    const initiateConversion = () => {
         if (!file) return;
+        setIsAdOpen(true);
+    };
 
+    const performConversion = async () => {
+        if (!file) return;
         setIsConverting(true);
         setResult('');
+        setIsAdOpen(false); // Close ad if not already closed
 
         try {
             // Convert file to base64
@@ -48,11 +55,11 @@ export default function PdfToMarkdownPage() {
                     title: "Conversion Complete!",
                     description: "Your PDF has been converted to Markdown with AI.",
                 });
+                setIsConverting(false);
             };
         } catch (error) {
             console.error(error);
             toast({ title: 'Error', description: 'Failed to convert PDF. It might be too large.', variant: 'destructive' });
-        } finally {
             setIsConverting(false);
         }
     };
@@ -107,7 +114,7 @@ export default function PdfToMarkdownPage() {
                             {/* Action Buttons */}
                             <Button
                                 size="lg"
-                                onClick={handleConvert}
+                                onClick={initiateConversion}
                                 disabled={!file || isConverting}
                                 className="w-full max-w-xs z-20"
                             >
@@ -143,6 +150,12 @@ export default function PdfToMarkdownPage() {
                         </Card>
                     )}
                 </div>
+
+                <VideoAdModal
+                    isOpen={isAdOpen}
+                    onClose={() => setIsAdOpen(false)}
+                    onAdFinished={performConversion}
+                />
 
             </main>
             <AppFooter />
