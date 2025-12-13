@@ -36,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly' as const,
             priority: 0.85,
         },
+        {
+            url: `${baseUrl}/advertise`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        },
     ];
 
     return [...routes, ...posts];
