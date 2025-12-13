@@ -7,7 +7,7 @@ import html2canvas from 'html2canvas';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Settings, Loader, Printer, ChevronDown, FileDown } from 'lucide-react';
+import { Download, Settings, Loader, Printer, ChevronDown, FileDown, Code } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { templates, PdfTemplate } from '@/lib/templates';
 import StylePanel from './style-panel';
@@ -15,6 +15,7 @@ import { useLocalStorage } from '@/hooks/use-local-storage';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { saveAs } from 'file-saver';
 import { VideoAdModal } from './video-ad-modal';
+import { useToast } from '@/hooks/use-toast';
 
 const DEFAULT_MARKDOWN = `# Your Ultimate Markdown to PDF Converter
 
@@ -50,6 +51,7 @@ def convert_markdown_to_pdf(markdown_text):
 `;
 
 const Editor = () => {
+    const { toast } = useToast();
     const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
     const [selectedTemplate, setSelectedTemplate] = useState<PdfTemplate>(templates[0]);
     const [customStyles, setCustomStyles] = useState<string>('');
@@ -229,6 +231,16 @@ const Editor = () => {
                                 <DropdownMenuItem onClick={handleDownloadMarkdown}>
                                     <FileDown className="mr-2 h-4 w-4" />
                                     Download .md
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => {
+                                    navigator.clipboard.writeText(html);
+                                    toast({
+                                        title: "HTML Copied",
+                                        description: "Raw HTML code copied to clipboard"
+                                    });
+                                }}>
+                                    <Code className="mr-2 h-4 w-4" />
+                                    Copy HTML
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
