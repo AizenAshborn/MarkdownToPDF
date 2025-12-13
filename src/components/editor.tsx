@@ -58,7 +58,7 @@ const Editor = () => {
     const [orientation, setOrientation] = useState<'p' | 'l'>('p');
     const [isGenerating, setIsGenerating] = useState(false);
     const [isStylePanelOpen, setIsStylePanelOpen] = useState(false);
-    const [stats, setStats] = useLocalStorage('template-stats', {});
+    const [stats, setStats] = useLocalStorage<Record<string, number>>('template-stats', {});
     const [isAdModalOpen, setIsAdModalOpen] = useState(false);
 
     const previewRef = useRef<HTMLDivElement>(null);
