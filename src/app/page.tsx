@@ -74,7 +74,7 @@ export default function Home() {
             {/* Top Banner Ad */}
             <div className="w-full">
               <div className="text-xs font-bold text-muted-foreground text-center mb-1">SPONSORED</div>
-              <AdUnit slotId="1234567891" placeholderProps={mainContentAd} className="min-h-[100px]" />
+              <AdUnit slotId="2665864154" placeholderProps={mainContentAd} className="min-h-[100px]" />
             </div>
 
             <Hero />
