@@ -14,6 +14,61 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
     {
+        id: 'markdown-resume-guide',
+        title: 'How to Build a Developer Resume with Markdown (Free Template)',
+        description: 'Stop fighting with Word formatting. Learn how to write your CV in Markdown and convert it to a ATS-friendly PDF instantly.',
+        author: 'Tech Careers Team',
+        date: 'December 12, 2025',
+        readTime: '8 min read',
+        tags: ['Career', 'Resume', 'Markdown'],
+        imageUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80',
+        imageHint: 'resume on desk',
+        content: `
+# Why Smart Developers Write Resumes in Markdown
+
+If you are a developer, your resume is your codebase. Why are you maintaining it in a binary format like Microsoft Word?
+
+## The Problem with Word & Google Docs
+
+1.  **Version Control**: You can't \`git diff\` a .docx file.
+2.  **Formatting Hell**: Move an image one pixel, and your entire layout breaks.
+3.  **Inconsistency**: It's hard to keep font sizes and margins perfect.
+
+## The Solution: Markdown to PDF
+
+By writing your resume in Markdown, you treat your career history as data. 
+
+### Step 1: Structure Your Data
+
+\`\`\`markdown
+# Jane Doe
+## Senior Full Stack Engineer
+
+- **Email**: jane@example.com
+- **GitHub**: github.com/janedoe
+
+### Experience
+
+**Tech Corp** | Senior Engineer | *2020 - Present*
+- Led migration from monolith to microservices.
+- Improved CI/CD pipeline speed by 40%.
+\`\`\`
+
+### Step 2: Style with CSS (or AI)
+
+This is where **MarkdownToPDF.ca** shines. You don't need to manually bold or indent every line. 
+
+Use our **Intelligent Styling** feature and tell it:
+> "Make this look like a modern, clean tech resume with a sidebar for skills and blue accents."
+
+Our AI will generate the layout for you.
+
+### Step 3: Export to PDF
+
+Click download, and you have a crisp, ATS-friendly PDF. Need to update it next month? Just edit the text file and re-render. No layout fighting required.
+    `,
+    },
+    {
         id: 'mastering-markdown',
         title: "Mastering Markdown: A Beginner's Guide to Professional Documents",
         description: 'Learn the fundamentals of Markdown and how to create beautifully formatted documents for any purpose.',
