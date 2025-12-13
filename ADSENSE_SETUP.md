@@ -14,6 +14,14 @@
 | **Convert Popup** | `Video_AD_on_CONVERT` | `3267681148` | Square |
 | **Download Popup** | `video_AD_ondownload` | `7615132026` | Square |
 
-## Notes
-- **Convert Popup** & **Download Popup**: These use a custom "Processing" modal that displays a square ad unit for 5 seconds. This simulates a "Rewarded" ad experience efficiently using standard compliant display ads.
-- **Auto Ads**: Ensure "Vignette" ads are enabled in your AdSense settings for additional mobile full-screen revenue.
+## Troubleshooting Status
+
+### "Ads.txt Not Found"
+- **Status**: Fixed in codebase (`public/ads.txt` created).
+- **Action Required**: **Deploy** the latest changes.
+- **Verification**: Go to `https://markdownpdfconverter.com/ads.txt`. You should see the publisher ID.
+- **Timeframe**: Google takes up to 48 hours to crawl and verify the file.
+
+### "Getting Ready"
+- This means Google is reviewing your website content. This normally takes 3-7 days.
+- Ensure your site links are working (Blog, Docs) to pass the review content check.
