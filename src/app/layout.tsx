@@ -89,9 +89,14 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+        <meta name="google-site-verification" content="googled0d8e1d4eba1f7f4" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1494650266840512"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="font-body antialiased">
-        <AdSenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-1494650266840512'} />
         {children}
         <Toaster />
       </body>
