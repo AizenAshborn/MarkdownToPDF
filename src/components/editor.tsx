@@ -248,7 +248,7 @@ const Editor = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 min-h-[70vh]">
-                    <Card className="flex flex-col shadow-lg">
+                    <Card className="flex flex-col shadow-lg min-h-[50vh] md:min-h-0">
                         <CardContent className="p-0 flex-1">
                             <Textarea
                                 value={markdown}
