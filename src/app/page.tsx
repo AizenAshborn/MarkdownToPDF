@@ -5,6 +5,7 @@ import Editor from '@/components/editor';
 import StatsDashboard from '@/components/stats-dashboard';
 import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
+import FaqSection from '@/components/faq-section';
 
 import { SimulatedAd } from '@/components/simulated-ad';
 import { placeholderAds } from '@/lib/placeholder-images';
@@ -64,6 +65,27 @@ export default function Home() {
             </div>
 
             <StatsDashboard />
+
+            {/* SEO Content Block - Beats competitors with 'thin' content */}
+            <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-a:text-primary">
+              <h2>The Best Free Direct Markdown to PDF Converter</h2>
+              <p>
+                <strong>MarkdownToPDF.com</strong> is the most advanced free online tool designed to convert Markdown files (.md) into professional formatted PDF documents. Unlike other converters that simply print the HTML, we use a sophisticated rendering engine that ensures your layouts, code blocks, and images are preserved with pixel-perfect accuracy.
+              </p>
+              <h3>Why use a Markdown Converter?</h3>
+              <p>
+                Writing in Markdown allows you to focus on content without worrying about layout. However, sharing raw .md files is often not practical. Converting them to PDF ensures that your document looks exactly the same on every device, whether you are sending a <a href="/blog/markdown-resume-guide">developer resume</a>, a technical report, or a business proposal.
+              </p>
+              <h3>Features</h3>
+              <ul>
+                <li><strong>Real-time Preview:</strong> See your changes instantly as you type.</li>
+                <li><strong>Privacy First:</strong> All conversion happens in your browser. No server uploads.</li>
+                <li><strong>AI Styling:</strong> Use natural language to design your document.</li>
+                <li><strong>GFM Support:</strong> Full support for GitHub Flavored Markdown tables and lists.</li>
+              </ul>
+            </article>
+
+            <FaqSection />
           </main>
 
           {/* Right Sidebar Ads */}
