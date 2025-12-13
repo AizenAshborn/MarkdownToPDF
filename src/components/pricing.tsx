@@ -21,39 +21,20 @@ const tiers = [
         isPopular: false,
     },
     {
-        name: "Creator",
+        name: "Pro Creator",
         price: "$9",
         priceDetails: "/month",
         features: [
-            "Unlimited conversions",
-            "All premium templates (25+)",
-            "High-quality PDF output",
-            "No watermarks",
-            "Custom styling options",
+            "Everything in Starter",
+            "Access to Intelligent AI Styling",
+            "All Premium Templates (Resume, Legal)",
+            "Ad-free experience (No waiting)",
+            "Priority Rendering Queue",
             "50MB file size limit",
-            "Priority email support",
-            "Ad-free experience",
+            "Save custom themes",
         ],
-        cta: "Upgrade Now",
+        cta: "Upgrade to Pro",
         isPopular: true,
-    },
-    {
-        name: "Enterprise",
-        price: "$99",
-        priceDetails: "/month",
-        features: [
-            "Unlimited conversions",
-            "All templates + custom design",
-            "Maximum quality settings",
-            "Unlimited team members",
-            "Batch processing (unlimited)",
-            "Dedicated support",
-            "Custom integrations",
-            "Unlimited file size",
-            "SLA guarantee",
-        ],
-        cta: "Contact Sales",
-        isPopular: false,
     },
 ];
 
@@ -70,7 +51,7 @@ const Pricing = () => {
                 <div className="mt-4 text-sm text-muted-foreground">Annual billing saves you 25%</div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {tiers.map((tier) => (
                     <Card key={tier.name} className={cn("flex flex-col shadow-lg", tier.isPopular ? 'border-primary ring-2 ring-primary' : '')}>
                         {tier.isPopular && (
