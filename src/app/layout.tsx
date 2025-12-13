@@ -91,7 +91,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <AdSenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'pub-1494650266840512'} />
+        <AdSenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-1494650266840512'} />
         {children}
         <Toaster />
       </body>

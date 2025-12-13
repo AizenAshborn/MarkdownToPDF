@@ -12,7 +12,7 @@ type AdProps = {
     className?: string;
 };
 
-const PUB_ID = process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'pub-1494650266840512';
+const PUB_ID = process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-1494650266840512';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const AdUnit = ({ slotId, format = 'auto', style, placeholderProps, className }: AdProps) => {
