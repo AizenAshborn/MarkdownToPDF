@@ -9,13 +9,13 @@ const tiers = [
         price: "$0",
         priceDetails: "/month",
         features: [
-            "Up to 5 conversions per month",
-            "Basic templates only (3 templates)",
-            "Standard PDF quality",
-            "Watermarked output",
+            "Unlimited conversions per month",
+            "Access to Basic Templates",
+            "High-quality PDF output",
+            "No watermarks",
             "10MB file size limit",
             "Community support",
-            "Video ads on download",
+            "Sponsored by ads",
         ],
         cta: "Get Started",
         isPopular: false,
@@ -73,7 +73,7 @@ const Pricing = () => {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
                 {tiers.map((tier) => (
                     <Card key={tier.name} className={cn("flex flex-col shadow-lg", tier.isPopular ? 'border-primary ring-2 ring-primary' : '')}>
-                         {tier.isPopular && (
+                        {tier.isPopular && (
                             <div className="absolute top-0 right-4 -mt-3">
                                 <div className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full uppercase">Most Popular</div>
                             </div>
