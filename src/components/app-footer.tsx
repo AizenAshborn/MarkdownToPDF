@@ -1,5 +1,8 @@
+
 import { SimulatedAd } from "./simulated-ad";
 import { PlaceholderAd } from "@/lib/placeholder-images";
+import Link from "next/link";
+import { Github, Twitter } from "lucide-react";
 
 type AppFooterProps = {
     ad?: PlaceholderAd;
@@ -7,15 +10,57 @@ type AppFooterProps = {
 
 const AppFooter = ({ ad }: AppFooterProps) => {
     return (
-        <footer className="py-6 md:px-8 md:py-0 z-10">
-            <div className="container flex flex-col items-center justify-center gap-4">
-                <div className="mb-4 w-full max-w-4xl">
+        <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 mt-auto">
+            {/* Ad Section */}
+            <div className="container py-8 flex justify-center">
+                <div className="w-full max-w-4xl">
                     {ad && <SimulatedAd {...ad} />}
                 </div>
+            </div>
 
-                <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-                    Built by an expert user experience designer.
-                </p>
+            <div className="container px-4 md:px-6 py-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                    <div className="space-y-3">
+                        <h3 className="text-sm font-medium">Product</h3>
+                        <ul className="space-y-2.5">
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/#editor">Editor</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/#templates">Templates</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/#pricing">Pricing</Link></li>
+                        </ul>
+                    </div>
+                    <div className="space-y-3">
+                        <h3 className="text-sm font-medium">Resources</h3>
+                        <ul className="space-y-2.5">
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/cheatsheet">Markdown Cheatsheet</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/docs">Documentation</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog">Blog</Link></li>
+                        </ul>
+                    </div>
+                    <div className="space-y-3">
+                        <h3 className="text-sm font-medium">Use Cases</h3>
+                        <ul className="space-y-2.5">
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/markdown-resume-guide">Resume Builder</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/pdf-templates">Business Proposals</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/mastering-markdown">Students & Papers</Link></li>
+                        </ul>
+                    </div>
+                    <div className="space-y-3">
+                        <h3 className="text-sm font-medium">Community</h3>
+                        <div className="flex space-x-4">
+                            <Link href="https://github.com/AizenAshborn/MarkdownToPDF" target="_blank" className="text-muted-foreground hover:text-foreground">
+                                <Github className="h-5 w-5" />
+                                <span className="sr-only">GitHub</span>
+                            </Link>
+                            <Link href="#" className="text-muted-foreground hover:text-foreground">
+                                <Twitter className="h-5 w-5" />
+                                <span className="sr-only">Twitter</span>
+                            </Link>
+                        </div>
+                        <p className="text-xs text-muted-foreground pt-2">
+                            © {new Date().getFullYear()} MarkdownPDFConverter. All rights reserved.
+                        </p>
+                    </div>
+                </div>
             </div>
         </footer>
     );
