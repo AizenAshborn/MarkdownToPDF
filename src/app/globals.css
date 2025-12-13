@@ -81,4 +81,15 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Hide Next.js Dev Tools/Indicators */
+  body > [data-nextjs-toast],
+  body > [data-nextjs-scroll-restoration-indicator],
+  nextjs-portal,
+  #next-route-announcer {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+  }
 }

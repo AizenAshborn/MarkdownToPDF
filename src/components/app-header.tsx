@@ -8,7 +8,7 @@ const AppHeader = () => {
       <div className="container flex h-14 items-center">
         <Link href="/" className="flex items-center space-x-2 mr-6">
           <FileText className="h-6 w-6 text-primary" />
-          <span className="font-bold font-headline text-xl">MarkdownToPDF.ca</span>
+          <span className="font-bold font-headline text-xl">MarkdownPDFConverter.com</span>
         </Link>
         <nav className="flex items-center space-x-4">
           <Button variant="ghost" asChild>

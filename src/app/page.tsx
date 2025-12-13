@@ -4,44 +4,78 @@ import Hero from '@/components/hero';
 import Editor from '@/components/editor';
 import StatsDashboard from '@/components/stats-dashboard';
 import Pricing from '@/components/pricing';
+import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
+
 import { SimulatedAd } from '@/components/simulated-ad';
 import { placeholderAds } from '@/lib/placeholder-images';
 
 export default function Home() {
   const sidebarAds = placeholderAds.slice(0, 5);
+  const rightSidebarAds = [...placeholderAds.slice(2, 5), ...placeholderAds.slice(0, 3)];
   const mainContentAd = placeholderAds[5];
   const footerAd = placeholderAds[6];
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* JSON-LD Structured Data for SEO */}
+      <JsonLd data={websiteSchema} />
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={faqSchema} />
+      <JsonLd data={breadcrumbSchema} />
+
       <AppHeader />
       <div className="flex-1 container mx-auto px-4 py-8 md:py-12 z-10">
-        <div className="grid grid-cols-12 gap-8">
-          <aside className="col-span-12 lg:col-span-2 hidden lg:block space-y-8">
-            {sidebarAds.map((ad) => (
-              <SimulatedAd key={ad.id} {...ad} />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Left Sidebar Ads */}
+          <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
+            <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
+            {sidebarAds.map((ad, i) => (
+              <SimulatedAd key={`left-${i}`} {...ad} />
             ))}
           </aside>
-          <main className="col-span-12 lg:col-span-8">
-            <Hero />
-            <div className="my-8">
+
+          {/* Main Content */}
+          <main className="col-span-1 md:col-span-12 lg:col-span-8 flex flex-col gap-8">
+            {/* Top Banner Ad */}
+            <div className="w-full">
+              <div className="text-xs font-bold text-muted-foreground text-center mb-1">SPONSORED</div>
               {mainContentAd && <SimulatedAd {...mainContentAd} />}
             </div>
-            <Editor />
-            <div className="my-8">
-               {mainContentAd && <SimulatedAd {...mainContentAd} />}
+
+            <Hero />
+
+            {/* Mid-content Ad */}
+            <div className="my-4">
+              {mainContentAd && <SimulatedAd {...mainContentAd} />}
             </div>
+
+            <Editor />
+
+            {/* Post-editor Ad */}
+            <div className="my-4">
+              {mainContentAd && <SimulatedAd {...mainContentAd} />}
+            </div>
+
             <Pricing />
+
+            {/* Pre-stats Ad */}
+            <div className="my-4">
+              {mainContentAd && <SimulatedAd {...mainContentAd} />}
+            </div>
+
             <StatsDashboard />
           </main>
-          <aside className="col-span-12 lg:col-span-2 hidden lg:block space-y-8">
-             {sidebarAds.map((ad) => (
-              <SimulatedAd key={ad.id} {...ad} />
+
+          {/* Right Sidebar Ads */}
+          <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
+            <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
+            {rightSidebarAds.map((ad, i) => (
+              <SimulatedAd key={`right-${i}`} {...ad} />
             ))}
           </aside>
         </div>
       </div>
-       <AppFooter ad={footerAd} />
+      <AppFooter ad={footerAd} />
     </div>
   );
 }
