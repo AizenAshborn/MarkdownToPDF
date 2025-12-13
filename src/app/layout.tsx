@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AdSenseScript } from '@/components/adsense-script';
 import { ConsentBanner } from '@/components/consent-banner';
+import { ProProvider } from "@/providers/pro-provider";
 export const metadata: Metadata = {
   metadataBase: new URL('https://markdownpdfconverter.com'),
   title: {
@@ -105,11 +106,11 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-
-
-        <ConsentBanner publisherId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-1494650266840512'} showReject={true} />
-        {children}
-        <Toaster />
+        <ProProvider>
+          <ConsentBanner publisherId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-1494650266840512'} showReject={true} />
+          {children}
+          <Toaster />
+        </ProProvider>
       </body>
     </html>
   );

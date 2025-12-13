@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
+import { Suspense } from 'react';
+import { PaymentSuccessHandler } from '@/components/payment-success-handler';
 import Hero from '@/components/hero';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -137,6 +139,9 @@ export default function Home() {
         </div>
       </div>
       <AppFooter ad={footerAd} slotId="3731727336" />
+      <Suspense fallback={null}>
+        <PaymentSuccessHandler />
+      </Suspense>
     </div>
   );
 }

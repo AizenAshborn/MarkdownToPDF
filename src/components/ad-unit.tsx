@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { SimulatedAd } from './simulated-ad';
 import { PlaceholderAd } from '@/lib/placeholder-images';
+import { usePro } from '@/providers/pro-provider';
 
 type AdProps = {
     slotId?: string; // Google AdSense Slot ID
@@ -16,8 +17,14 @@ const PUB_ID = process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-149465026684051
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const AdUnit = ({ slotId, format = 'auto', style, placeholderProps, className }: AdProps) => {
+    const { isPro } = usePro();
+
     // If we are in dev mode OR we don't have a Pub ID yet, show the Simulator.
     const shouldShowAdSense = IS_PRODUCTION && PUB_ID && slotId;
+
+    if (isPro) {
+        return null;
+    }
 
     const adRef = useRef<HTMLModElement>(null);
 
