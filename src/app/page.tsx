@@ -30,10 +30,10 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Left Sidebar Ads */}
           <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
-            <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
-            {sidebarAds.map((ad, i) => (
-              <SimulatedAd key={`left-${i}`} {...ad} />
-            ))}
+            <div className="sticky top-20">
+              <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
+              {sidebarAds[0] && <SimulatedAd {...sidebarAds[0]} />}
+            </div>
           </aside>
 
           {/* Main Content */}
@@ -46,24 +46,9 @@ export default function Home() {
 
             <Hero />
 
-            {/* Mid-content Ad */}
-            <div className="my-4">
-              {mainContentAd && <SimulatedAd {...mainContentAd} />}
-            </div>
-
             <EditorWrapper />
 
-            {/* Post-editor Ad */}
-            <div className="my-4">
-              {mainContentAd && <SimulatedAd {...mainContentAd} />}
-            </div>
-
             <Pricing />
-
-            {/* Pre-stats Ad */}
-            <div className="my-4">
-              {mainContentAd && <SimulatedAd {...mainContentAd} />}
-            </div>
 
             <StatsDashboard />
 
@@ -91,10 +76,10 @@ export default function Home() {
 
           {/* Right Sidebar Ads */}
           <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
-            <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
-            {rightSidebarAds.map((ad, i) => (
-              <SimulatedAd key={`right-${i}`} {...ad} />
-            ))}
+            <div className="sticky top-20">
+              <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
+              {rightSidebarAds[0] && <SimulatedAd {...rightSidebarAds[0]} />}
+            </div>
           </aside>
         </div>
       </div>
