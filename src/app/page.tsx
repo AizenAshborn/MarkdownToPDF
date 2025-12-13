@@ -3,13 +3,14 @@ import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import { Suspense } from 'react';
 import { PaymentSuccessHandler } from '@/components/payment-success-handler';
+import { FaqSection } from '@/components/faq-section';
 import Hero from '@/components/hero';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import StatsDashboard from '@/components/stats-dashboard';
 import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
-import FaqSection from '@/components/faq-section';
+
 
 import { AdUnit } from '@/components/ad-unit';
 import { placeholderAds } from '@/lib/placeholder-images';

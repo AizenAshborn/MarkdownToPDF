@@ -1,4 +1,3 @@
-
 import {
     Accordion,
     AccordionContent,
@@ -6,50 +5,44 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
-export default function FaqSection() {
+export function FaqSection() {
     return (
-        <section className="py-12 border-t" id="faq">
-            <div className="text-center mb-8">
-                <h2 className="font-headline text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-                <p className="text-muted-foreground">Everything you need to know about converting Markdown to PDF.</p>
+        <section className="py-16 bg-muted/30">
+            <div className="container max-w-4xl mx-auto">
+                <h2 className="text-3xl font-bold font-headline text-center mb-8">Frequently Asked Questions</h2>
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger className="text-lg">What is the best AI Markdown to PDF converter free?</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                            MarkdownPDFConverter is widely considered the <strong>best AI markdown to pdf converter free</strong> tool available. We use advanced artificial intelligence to ensure your document layout, code blocks, and images are rendered perfectly every time.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger className="text-lg">Is this AI markdown to pdf converter free without watermark?</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                            Yes! We believe in professional quality. Our <strong>Ai markdown to pdf converter free without watermark</strong> ensures your documents are clean, professional, and ready for business or academic use immediately after download.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger className="text-lg">Can I download the converted files?</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                            Absolutely. After conversion, you can instantly proceed with the <strong>Ai markdown to pdf converter free download</strong> of your document. We support high-quality PDF downloads that preserve your exact styling.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger className="text-lg">Is this a Markdown to PDF VSCode alternative?</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                            While <strong>Markdown to PDF VSCode</strong> extensions are great for developers, our online tool offers a more accessible, zero-setup solution accessible from any device or browser, with AI-powered styling capabilities that standard extensions lack.
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-5">
+                        <AccordionTrigger className="text-lg">How does the MD to PDF converter free work online?</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                            Our <strong>MD to PDF converter free</strong> tool runs entirely in your browser (utilizing cloud AI for styling). Simply paste your Markdown, preview the result in real-time, and click download. It's the fastest <strong>Markdown to PDF online</strong> solution.
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-
-            <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Is MarkdownToPDF.com completely free?</AccordionTrigger>
-                    <AccordionContent>
-                        Yes! Our converter is 100% free to use. There are no watermarks, no file limits, and no hidden fees. We support the project through unobtrusive ads.
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2">
-                    <AccordionTrigger>Is my data private? Do you store my files?</AccordionTrigger>
-                    <AccordionContent>
-                        Absolutely. We process your files <strong>in your browser</strong>. Your Markdown text never leaves your computer, and we do not store any of your documents on our servers. It is strictly client-side processing for maximum privacy.
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3">
-                    <AccordionTrigger>Does it support GitHub Flavored Markdown (GFM)?</AccordionTrigger>
-                    <AccordionContent>
-                        Yes, we support comprehensive GFM syntax including tables, task lists, strikethrough, and auto-linked URLs. We use a custom parser compliant with CommonMark standards.
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-4">
-                    <AccordionTrigger>Can I add images to my PDF?</AccordionTrigger>
-                    <AccordionContent>
-                        Yes, you can include images using standard Markdown syntax <code>![Alt Text](URL)</code>. For the PDF generation to work, images must be hosted publicly (like on Imgur, Unsplash, or your own server) so our renderer can fetch them.
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-5">
-                    <AccordionTrigger>How do I customize the PDF styling?</AccordionTrigger>
-                    <AccordionContent>
-                        We offer built-in templates (Academic, Business, Resume) and a powerful <strong>Intelligent Styling Engine</strong>. You can simply describe the look you want (e.g., "blue headers with a sidebar"), and our AI will generate the custom CSS for you.
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
         </section>
     )
 }
