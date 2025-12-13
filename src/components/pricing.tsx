@@ -26,7 +26,7 @@ const tiers = [
         stripePriceId: null, // Free plan
     },
     {
-        name: "Pro Creator",
+        name: "Pro",
         price: "$9",
         priceDetails: "/month",
         features: [
