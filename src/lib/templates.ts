@@ -81,7 +81,7 @@ export const templates: PdfTemplate[] = [
       .preview-container code, .preview-container pre, .preview-container blockquote { display: none; }
     `,
   },
-    {
+  {
     id: 'business-letter',
     name: 'Business Letter',
     description: 'A professional template for formal correspondence.',
@@ -122,4 +122,91 @@ export const templates: PdfTemplate[] = [
       }
     `,
   },
+  {
+    id: 'modern-resume',
+    name: 'Modern Resume',
+    description: 'A sleek, ATS-friendly resume layout with a sidebar.',
+    styles: `
+      .preview-container {
+        font-family: 'Inter', sans-serif;
+        color: #334155;
+        line-height: 1.5;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        background: #fff;
+      }
+      
+      /* Reset for non-grid elements if they appear */
+      .preview-container > * { grid-column: 1 / -1; }
+      
+      .preview-container h1 {
+        grid-column: 1 / -1;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: -0.05em;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 1rem;
+      }
+      
+      .preview-container h2 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #64748b;
+        border-bottom: 1px solid #e2e8f0;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Main Content Area */
+      .preview-container p, .preview-container ul, .preview-container h3, .preview-container h4 {
+         grid-column: 1 / 2;
+      }
+      
+      /* Sidebar Hack: Elements after a horizontal rule go to sidebar? 
+         CSS Grid in Markdown is hard. Let's stick to a single column but clean style for now 
+         as standard Markdown doesn't support columns easily without HTML.
+         Reverting to Single Column Clean Resume.
+      */
+      
+      .preview-container {
+         display: block;
+         max-width: 100%;
+      }
+
+       .preview-container h1 {
+        text-align: center;
+        border-bottom: none;
+       }
+       
+       .preview-container h2 {
+         color: #2563eb;
+         border-bottom: 2px solid #2563eb;
+       }
+       
+       .preview-container ul {
+         list-style: none;
+         padding-left: 0;
+       }
+       
+       .preview-container li {
+         margin-bottom: 0.5rem;
+         padding-left: 1.5em;
+         position: relative;
+       }
+       
+       .preview-container li::before {
+         content: "•";
+         color: #2563eb;
+         font-weight: bold;
+         position: absolute;
+         left: 0;
+       }
+    `,
+  }
 ];
