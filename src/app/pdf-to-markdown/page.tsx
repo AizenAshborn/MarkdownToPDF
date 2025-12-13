@@ -5,7 +5,8 @@ import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Upload, FileText, ArrowRight, Loader2, Copy } from 'lucide-react';
+import { Upload, FileText, ArrowRight, Loader2, Copy, Download } from 'lucide-react';
+import { saveAs } from 'file-saver';
 import { useToast } from '@/hooks/use-toast';
 import { convertPdfToMarkdown } from '@/app/actions/convert-pdf';
 import { Textarea } from '@/components/ui/textarea';
@@ -82,6 +83,12 @@ export default function PdfToMarkdownPage() {
         toast({ title: "Copied!", description: "Markdown copied to clipboard." });
     };
 
+    const handleDownload = () => {
+        const blob = new Blob([result], { type: 'text/markdown;charset=utf-8' });
+        saveAs(blob, 'converted.md');
+        toast({ title: "Downloaded!", description: "File saved as converted.md" });
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-background">
             <AppHeader />
@@ -149,9 +156,14 @@ export default function PdfToMarkdownPage() {
                         <Card className="animate-in fade-in slide-in-from-bottom-4">
                             <CardHeader className="flex flex-row items-center justify-between">
                                 <CardTitle>Converted Markdown</CardTitle>
-                                <Button variant="outline" size="sm" onClick={copyToClipboard}>
-                                    <Copy className="mr-2 h-4 w-4" /> Copy
-                                </Button>
+                                <div className="flex gap-2">
+                                    <Button variant="outline" size="sm" onClick={copyToClipboard}>
+                                        <Copy className="mr-2 h-4 w-4" /> Copy
+                                    </Button>
+                                    <Button size="sm" onClick={handleDownload}>
+                                        <Download className="mr-2 h-4 w-4" /> Download .md
+                                    </Button>
+                                </div>
                             </CardHeader>
                             <CardContent>
                                 <Textarea
