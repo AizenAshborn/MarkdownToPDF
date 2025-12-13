@@ -26,6 +26,9 @@ const AppHeader = () => {
           </Link>
           <div className="flex items-center space-x-1">
             <Button variant="ghost" asChild className="hidden sm:inline-flex">
+              <Link href="/#pricing">Pricing</Link>
+            </Button>
+            <Button variant="ghost" asChild className="hidden sm:inline-flex">
               <Link href="/blog">Blog</Link>
             </Button>
             <Button variant="ghost" asChild className="hidden sm:inline-flex">
