@@ -64,9 +64,15 @@ export const metadata: Metadata = {
   },
   category: 'Technology',
   icons: {
-    icon: '/icon.png?v=2',
+    icon: [
+      { url: '/icon.png?v=2' },
+      { url: '/icon-192.png?v=2', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png?v=2', sizes: '512x512', type: 'image/png' },
+    ],
     shortcut: '/icon.png?v=2',
-    apple: '/apple-icon.png?v=2',
+    apple: [
+      { url: '/apple-icon.png?v=2' },
+    ],
   },
   verification: {
     google: 'googled0d8e1d4eba1f7f4',
