@@ -5,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   metadataBase: new URL('https://markdownpdfconverter.com'),
   title: {
-    default: 'Markdown to PDF Converter | Free Online Tool - MarkdownPDFConverter.com',
-    template: '%s | MarkdownPDFConverter.com',
+    default: 'Markdown to PDF Converter | Free Online Tool',
+    template: '%s | Markdown to PDF Converter',
   },
   description: 'Transform your Markdown documents into beautifully styled PDFs instantly. Free online converter with live preview, custom templates, and professional formatting options.',
   keywords: [
