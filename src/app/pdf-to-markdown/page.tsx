@@ -180,6 +180,7 @@ export default function PdfToMarkdownPage() {
                     isOpen={isAdOpen}
                     onClose={() => setIsAdOpen(false)}
                     onAdFinished={performConversion}
+                    adSlotId="5044809000"
                 />
 
                 <article className="prose dark:prose-invert max-w-none mt-24 border-t pt-12">
