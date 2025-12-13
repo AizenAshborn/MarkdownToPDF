@@ -127,7 +127,7 @@ export default function Home() {
             <div className="sticky top-20">
               <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
               <AdUnit
-                slotId="1234567892"
+                slotId="5044809000"
                 placeholderProps={rightSidebarAds[0]}
                 format="rectangle"
                 style={{ height: '600px' }}
@@ -136,7 +136,7 @@ export default function Home() {
           </aside>
         </div>
       </div>
-      <AppFooter ad={footerAd} />
+      <AppFooter ad={footerAd} slotId="3731727336" />
     </div>
   );
 }
