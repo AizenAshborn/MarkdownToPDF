@@ -11,9 +11,12 @@ const AppHeader = () => {
           <Image src="/logo.png" alt="Logo" width={32} height={32} className="rounded-md" />
           <span className="font-bold font-headline text-xl">MarkdownPDFConverter.com</span>
         </Link>
-        <nav className="flex items-center space-x-4">
+        <nav className="flex items-center space-x-1">
           <Button variant="ghost" asChild>
             <Link href="/blog">Blog</Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/docs">Docs</Link>
           </Button>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
