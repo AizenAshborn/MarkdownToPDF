@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { AdSenseScript } from '@/components/adsense-script';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://markdownpdfconverter.com'),
@@ -90,6 +91,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
+        {process.env.NEXT_PUBLIC_ADSENSE_PUB_ID && (
+          <AdSenseScript pId={process.env.NEXT_PUBLIC_ADSENSE_PUB_ID} />
+        )}
         {children}
         <Toaster />
       </body>
