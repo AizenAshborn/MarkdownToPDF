@@ -2,6 +2,8 @@ import Link from 'next/link';
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import Hero from '@/components/hero';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 import StatsDashboard from '@/components/stats-dashboard';
 import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
@@ -58,6 +60,17 @@ export default function Home() {
 
             <Hero />
 
+            {/* Feature Callout - PDF to Markdown */}
+            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-sm">
+              <div>
+                <h3 className="text-lg font-bold text-primary flex items-center justify-center sm:justify-start gap-2">✨ New: PDF to Markdown with AI</h3>
+                <p className="text-sm text-foreground/80">Extract text, code, and tables from PDFs back to editable Markdown format.</p>
+              </div>
+              <Button asChild className="shrink-0">
+                <Link href="/pdf-to-markdown">Try It Now <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+            </div>
+
             <EditorWrapper />
 
             <Pricing />
@@ -69,6 +82,10 @@ export default function Home() {
               <h2>The Best Free Direct Markdown to PDF Converter</h2>
               <p>
                 <strong>MarkdownToPDF.com</strong> is the most advanced free online tool designed to convert Markdown files (.md) into professional formatted PDF documents. Unlike other converters that simply print the HTML, we use a sophisticated rendering engine that ensures your layouts, code blocks, and images are preserved with pixel-perfect accuracy.
+              </p>
+              <h3>New: PDF to Markdown Conversion</h3>
+              <p>
+                Need to go the other way? Our new <Link href="/pdf-to-markdown">PDF to Markdown Converter</Link> uses advanced AI to analyze your PDF documents and reconstruct them into clean Markdown text. It handles difficult elements like multi-column layouts, data tables, and syntax-highlighted code blocks, saving you hours of manual re-typing.
               </p>
               <h3>Why use a Markdown Converter?</h3>
               <p>

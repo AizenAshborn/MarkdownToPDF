@@ -182,6 +182,42 @@ export default function PdfToMarkdownPage() {
                     onAdFinished={performConversion}
                 />
 
+                <article className="prose dark:prose-invert max-w-none mt-24 border-t pt-12">
+                    <h2 className="text-3xl font-bold mb-6">Convert PDF to Markdown with AI</h2>
+                    <p className="text-lg text-muted-foreground mb-8">
+                        Our <strong>AI-powered PDF to Markdown converter</strong> goes beyond simple text extraction.
+                        By leveraging Google's Gemini 1.5 Pro technology, we intelligently analyze the layout, identifying headers,
+                        lists, tables, and even code blocks to reconstruct your document into clean, valid Markdown.
+                    </p>
+
+                    <div className="grid md:grid-cols-3 gap-8 mb-12">
+                        <div>
+                            <h3 className="text-xl font-semibold mb-3">📄 Preserve Formatting</h3>
+                            <p className="text-muted-foreground">Maintains document hierarchy, including H1-H6 headers, bold/italic text, and list structures.</p>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-semibold mb-3">🧩 Extract Tables</h3>
+                            <p className="text-muted-foreground">Intelligently converts complex PDF data tables into standard Markdown table syntax automatically.</p>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-semibold mb-3">💻 Code Blocks</h3>
+                            <p className="text-muted-foreground">Detects programming code within PDFs and wraps it in proper code blocks with language highlighting.</p>
+                        </div>
+                    </div>
+
+                    <h2 className="text-2xl font-bold mb-4">How to Convert PDF to Markdown?</h2>
+                    <ol className="list-decimal pl-5 space-y-2 mb-8">
+                        <li>Upload your PDF file (drag & drop or click to select).</li>
+                        <li>Click the <strong>"Convert to Markdown"</strong> button.</li>
+                        <li>Watch a brief message while our AI processes the document.</li>
+                        <li>Copy the generated Markdown or download the <code>.md</code> file directly.</li>
+                    </ol>
+
+                    <p className="text-sm text-muted-foreground">
+                        * Ideal for developers, writers, and students who need to migrate documentation from PDF to standard Markdown formats for GitHub Readmes, blogs, or documentation sites.
+                    </p>
+                </article>
+
             </main>
             <AppFooter />
         </div>
