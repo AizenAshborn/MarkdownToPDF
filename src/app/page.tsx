@@ -6,7 +6,7 @@ import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
 import FaqSection from '@/components/faq-section';
 
-import { SimulatedAd } from '@/components/simulated-ad';
+import { AdUnit } from '@/components/ad-unit';
 import { placeholderAds } from '@/lib/placeholder-images';
 import EditorWrapper from '@/components/editor-wrapper';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -17,6 +17,7 @@ export default function Home() {
   const mainContentAd = placeholderAds[5];
   const footerAd = placeholderAds[6];
 
+  // Note: Replace '1234567890' with actual Slot IDs from Google AdSense dashboard
   return (
     <div className="flex flex-col min-h-screen">
       {/* JSON-LD Structured Data for SEO */}
@@ -32,7 +33,12 @@ export default function Home() {
           <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
             <div className="sticky top-20">
               <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
-              {sidebarAds[0] && <SimulatedAd {...sidebarAds[0]} />}
+              <AdUnit
+                slotId="1234567890"
+                placeholderProps={sidebarAds[0]}
+                format="rectangle"
+                style={{ height: '600px' }}
+              />
             </div>
           </aside>
 
@@ -41,7 +47,7 @@ export default function Home() {
             {/* Top Banner Ad */}
             <div className="w-full">
               <div className="text-xs font-bold text-muted-foreground text-center mb-1">SPONSORED</div>
-              {mainContentAd && <SimulatedAd {...mainContentAd} />}
+              <AdUnit slotId="1234567891" placeholderProps={mainContentAd} className="min-h-[100px]" />
             </div>
 
             <Hero />
@@ -78,7 +84,12 @@ export default function Home() {
           <aside className="hidden lg:flex lg:col-span-2 flex-col space-y-6">
             <div className="sticky top-20">
               <div className="text-xs font-bold text-muted-foreground text-center mb-2">ADVERTISEMENT</div>
-              {rightSidebarAds[0] && <SimulatedAd {...rightSidebarAds[0]} />}
+              <AdUnit
+                slotId="1234567892"
+                placeholderProps={rightSidebarAds[0]}
+                format="rectangle"
+                style={{ height: '600px' }}
+              />
             </div>
           </aside>
         </div>
