@@ -75,41 +75,46 @@ export default function PdfToMarkdownPage() {
 
                 <div className="grid gap-8">
                     <Card className="border-2 border-dashed border-primary/20 bg-muted/30">
-                        <CardContent className="flex flex-col items-center justify-center py-12 space-y-4">
-                            <div className="p-4 rounded-full bg-primary/10">
-                                <Upload className="h-8 w-8 text-primary" />
-                            </div>
-
-                            <div className="text-center">
-                                {file ? (
-                                    <div className="flex items-center justify-center space-x-2 text-primary font-medium">
-                                        <FileText className="h-4 w-4" />
-                                        <span>{file.name}</span>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <p className="font-medium">Click to upload or drag and drop</p>
-                                        <p className="text-sm text-muted-foreground">PDF (MAX 4MB)</p>
-                                    </>
-                                )}
+                        <CardContent className="flex flex-col items-center justify-center py-12 space-y-6">
+                            {/* Dropzone Area */}
+                            <div className="relative group w-full max-w-md border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer bg-card">
                                 <input
                                     type="file"
                                     accept=".pdf"
                                     onChange={handleFileChange}
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                 />
+                                <div className="p-4 rounded-full bg-primary/10 mb-4 group-hover:scale-110 transition-transform">
+                                    <Upload className="h-8 w-8 text-primary" />
+                                </div>
+
+                                {file ? (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-center space-x-2 text-primary font-medium">
+                                            <FileText className="h-4 w-4" />
+                                            <span className="truncate max-w-[200px]">{file.name}</span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">Click to change file</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-1">
+                                        <p className="font-medium">Click to upload or drag & drop</p>
+                                        <p className="text-sm text-muted-foreground">PDF (MAX 4MB)</p>
+                                    </div>
+                                )}
                             </div>
 
+                            {/* Action Buttons */}
                             <Button
                                 size="lg"
                                 onClick={handleConvert}
                                 disabled={!file || isConverting}
-                                className="w-full max-w-xs"
+                                className="w-full max-w-xs z-20"
                             >
                                 {isConverting ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Converting with AI...
+                                        Converting...
                                     </>
                                 ) : (
                                     <>
