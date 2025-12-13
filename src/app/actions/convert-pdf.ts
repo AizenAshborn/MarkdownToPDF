@@ -30,8 +30,11 @@ export async function convertPdfToMarkdown(base64Pdf: string): Promise<string> {
         ]);
 
         return result.response.text();
-    } catch (error) {
+    } catch (error: any) {
         console.error('AI PDF Conversion Error:', error);
-        return '# Error\n\nFailed to convert PDF. Please try a smaller file or ensure content is readable text.';
+        const errorMessage = error.message || 'Unknown error occurred';
+        // Check if it's an API key issue
+        const isKeyMissing = !process.env.GOOGLE_GENAI_API_KEY;
+        return `# Error\n\nFailed to convert PDF.\n\n**Debug Details:**\n- Message: ${errorMessage}\n- API Key Present: ${isKeyMissing ? 'No' : 'Yes'}\n- Model: gemini-1.5-flash`;
     }
 }
