@@ -30,12 +30,7 @@ const AppHeader = () => {
           </div>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="#">
-              <Rss className="h-5 w-5" />
-              <span className="sr-only">RSS Feed</span>
-            </Link>
-          </Button>
+
         </div>
       </div>
     </header>
