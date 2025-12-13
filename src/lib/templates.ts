@@ -208,5 +208,47 @@ export const templates: PdfTemplate[] = [
          left: 0;
        }
     `,
+  },
+  {
+    id: 'legal-contract',
+    name: 'Legal Contract',
+    description: 'Formal layout with numbered sections and justified text.',
+    styles: `
+      .preview-container {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 11pt;
+        color: #000;
+        line-height: 1.5;
+        background-color: #fff;
+        text-align: justify;
+      }
+      .preview-container h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 14pt;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #000;
+        padding-bottom: 10px;
+      }
+      .preview-container h2 {
+        font-size: 12pt;
+        font-weight: bold;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+      .preview-container p {
+        margin-bottom: 1rem;
+        text-indent: 2em;
+      }
+      .preview-container ul, .preview-container ol {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+      }
+      .preview-container li {
+        margin-bottom: 0.5rem;
+      }
+    `,
   }
 ];
