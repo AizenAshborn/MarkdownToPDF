@@ -13,6 +13,7 @@ import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema 
 
 
 import { ComparisonTable } from '@/components/comparison-table';
+import { Testimonials } from '@/components/testimonials';
 
 import { AdUnit } from '@/components/ad-unit';
 import { placeholderAds } from '@/lib/placeholder-images';
@@ -102,6 +103,8 @@ export default function Home() {
             <StatsDashboard />
 
             <ComparisonTable />
+
+            <Testimonials />
 
             {/* SEO Content Block - Beats competitors with 'thin' content */}
             <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-a:text-primary">

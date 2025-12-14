@@ -40,6 +40,13 @@ export const websiteSchema = {
         'Custom PDF Styling',
         'Statistics Dashboard',
     ],
+    aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        ratingCount: '1240',
+        bestRating: '5',
+        worstRating: '1',
+    },
     screenshot: 'https://markdownpdfconverter.com/og-image.png',
     softwareVersion: '1.0.0',
     creator: {
