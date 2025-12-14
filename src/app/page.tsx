@@ -103,7 +103,7 @@ export default function Home() {
             <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-a:text-primary">
               <h2>The Best Free Direct Markdown to PDF Converter</h2>
               <p>
-                <strong>MarkdownToPDF.com</strong> is the most advanced free online tool designed to convert Markdown files (.md) into professional formatted PDF documents. Unlike other converters that simply print the HTML, we use a sophisticated rendering engine that ensures your layouts, code blocks, and images are preserved with pixel-perfect accuracy.
+                <strong>MarkdownPDFConverter.com</strong> is the most advanced free online tool designed to convert Markdown files (.md) into professional formatted PDF documents. Unlike other converters that simply print the HTML, we use a sophisticated rendering engine that ensures your layouts, code blocks, and images are preserved with pixel-perfect accuracy.
               </p>
               <h3>New: PDF to Markdown Conversion</h3>
               <p>
