@@ -7,10 +7,16 @@ import { ProProvider } from "@/providers/pro-provider";
 export const metadata: Metadata = {
   metadataBase: new URL('https://markdownpdfconverter.com'),
   title: {
-    default: 'AI Markdown to PDF & PDF to Markdown | Free Artificial Intelligence Converter',
+    default: 'AI Markdown to PDF & PDF to Markdown | Free Converter',
     template: '%s | AI Markdown to PDF Tool',
   },
-  description: 'Convert Markdown to PDF and PDF to Markdown using advanced AI. Free online tool with Artificial Intelligence styling, live preview, and smart document analysis.',
+  description: 'Convert Markdown to PDF and back with advanced AI. Free, secure online tool with live preview and smart styling.',
+  alternates: {
+    canonical: 'https://markdownpdfconverter.com',
+    languages: {
+      'en-US': 'https://markdownpdfconverter.com',
+    },
+  },
   keywords: [
     'markdown to pdf',
     'pdf to markdown',
