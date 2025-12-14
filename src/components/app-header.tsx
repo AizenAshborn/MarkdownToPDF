@@ -27,7 +27,7 @@ const AppHeader = () => {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2 mr-2 sm:mr-6">
             <Image src="/logo.png" alt="Logo" width={32} height={32} className="shrink-0" />
-            <span className="font-bold font-headline text-xs sm:text-xl leading-none">MarkdownPDFConverter.com</span>
+            <span className="font-bold font-headline text-sm sm:text-xl leading-none truncate max-w-[200px] xs:max-w-none">MarkdownPDFConverter.com</span>
             {isPro && (
               <span className="ml-1 sm:ml-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider shadow-sm">
                 Pro
@@ -37,7 +37,7 @@ const AppHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="flex items-center space-x-2 sm:space-x-4 ml-0 sm:ml-2">
-            <Link href={toggleLinkUrl} className="font-bold font-headline text-xs sm:text-xl text-primary hover:underline transition-colors shrink-0 whitespace-nowrap">
+            <Link href={toggleLinkUrl} className="font-bold font-headline text-sm sm:text-xl text-primary hover:underline transition-colors shrink-0 whitespace-nowrap">
               {toggleLinkText}
             </Link>
             <div className="hidden md:flex items-center space-x-1">
