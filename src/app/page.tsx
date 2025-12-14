@@ -12,6 +12,8 @@ import Pricing from '@/components/pricing';
 import { JsonLd, websiteSchema, organizationSchema, faqSchema, breadcrumbSchema } from '@/components/json-ld';
 
 
+import { ComparisonTable } from '@/components/comparison-table';
+
 import { AdUnit } from '@/components/ad-unit';
 import { placeholderAds } from '@/lib/placeholder-images';
 import EditorWrapper from '@/components/editor-wrapper';
@@ -98,6 +100,8 @@ export default function Home() {
             <Pricing />
 
             <StatsDashboard />
+
+            <ComparisonTable />
 
             {/* SEO Content Block - Beats competitors with 'thin' content */}
             <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-a:text-primary">
