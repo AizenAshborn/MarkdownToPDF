@@ -169,10 +169,10 @@ const Editor = () => {
                 `}
             </style>
             <section className="space-y-6">
-                <div className="flex justify-between items-center gap-4">
-                    <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                         <Select onValueChange={handleTemplateChange} defaultValue={selectedTemplate.id}>
-                            <SelectTrigger className="w-[200px] bg-card">
+                            <SelectTrigger className="w-full sm:w-[200px] bg-card">
                                 <SelectValue placeholder="Select a template" />
                             </SelectTrigger>
                             <SelectContent>
@@ -184,36 +184,38 @@ const Editor = () => {
                             </SelectContent>
                         </Select>
 
-                        <div className="flex bg-card rounded-md border">
-                            <Button
-                                variant={orientation === 'p' ? 'secondary' : 'ghost'}
-                                size="sm"
-                                className="px-3"
-                                onClick={() => setOrientation('p')}
-                                title="Portrait"
-                            >
-                                <span className="sr-only">Portrait</span>
-                                <div className="h-4 w-3 border-2 border-current rounded-sm" />
-                            </Button>
-                            <Button
-                                variant={orientation === 'l' ? 'secondary' : 'ghost'}
-                                size="sm"
-                                className="px-3"
-                                onClick={() => setOrientation('l')}
-                                title="Landscape"
-                            >
-                                <span className="sr-only">Landscape</span>
-                                <div className="h-3 w-4 border-2 border-current rounded-sm" />
+                        <div className="flex justify-between sm:justify-start gap-4">
+                            <div className="flex bg-card rounded-md border">
+                                <Button
+                                    variant={orientation === 'p' ? 'secondary' : 'ghost'}
+                                    size="sm"
+                                    className="px-3"
+                                    onClick={() => setOrientation('p')}
+                                    title="Portrait"
+                                >
+                                    <span className="sr-only">Portrait</span>
+                                    <div className="h-4 w-3 border-2 border-current rounded-sm" />
+                                </Button>
+                                <Button
+                                    variant={orientation === 'l' ? 'secondary' : 'ghost'}
+                                    size="sm"
+                                    className="px-3"
+                                    onClick={() => setOrientation('l')}
+                                    title="Landscape"
+                                >
+                                    <span className="sr-only">Landscape</span>
+                                    <div className="h-3 w-4 border-2 border-current rounded-sm" />
+                                </Button>
+                            </div>
+
+                            <Button variant="outline" size="icon" onClick={() => setIsStylePanelOpen(true)}>
+                                <Settings className="h-4 w-4" />
+                                <span className="sr-only">Customize Styles</span>
                             </Button>
                         </div>
-
-                        <Button variant="outline" size="icon" onClick={() => setIsStylePanelOpen(true)}>
-                            <Settings className="h-4 w-4" />
-                            <span className="sr-only">Customize Styles</span>
-                        </Button>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <Button onClick={startPdfGeneration} disabled={isGenerating} className="min-w-[150px]">
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <Button onClick={startPdfGeneration} disabled={isGenerating} className="flex-1 sm:flex-none min-w-[150px]">
                             {isGenerating ? <Loader className="animate-spin mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
                             {isGenerating ? 'Generating...' : 'Download PDF'}
                         </Button>
