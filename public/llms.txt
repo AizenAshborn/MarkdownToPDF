@@ -1,0 +1,31 @@
+# MarkdownPDFConverter
+
+> The Best Free AI Markdown to PDF & PDF to Markdown Converter.
+
+## Overview
+MarkdownPDFConverter is a web-based tool that allows users to convert Markdown files to PDF and PDF files to Markdown. It emphasizes privacy (client-side processing), ease of use (no sign-up), and aesthetic quality (AI-powered styling).
+
+## Core Capabilities
+
+### Markdown to PDF
+- **Real-time Preview**: See changes instantly.
+- **Templates**: Professional templates (Minimal, Resume, Academic).
+- **AI Styling**: Natural language prompts to customize CSS.
+- **GFM Support**: Tables, checklists, code blocks.
+
+### PDF to Markdown
+- **AI Extraction**: Reconstructs Markdown structure from PDFs.
+- **Accuracy**: Preserves tables and code blocks.
+- **Privacy**: Documents are processed securely.
+
+## Navigation
+- Tool Home: https://markdownpdfconverter.com
+- Pricing: https://markdownpdfconverter.com/#pricing
+- Blog: https://markdownpdfconverter.com/blog
+- Docs: https://markdownpdfconverter.com/docs
+- Cheatsheet: https://markdownpdfconverter.com/cheatsheet
+
+## Technical Details
+- Built with: Next.js, Tailwind CSS, jsPDF, html2canvas, Vercel AI SDK.
+- Host: Vercel.
+- Privacy: Browser-based rendering.

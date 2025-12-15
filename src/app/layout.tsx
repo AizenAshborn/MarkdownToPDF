@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: 'AI Markdown to PDF & PDF to Markdown | Free Converter',
     template: '%s | AI Markdown to PDF Tool',
   },
-  description: 'Convert Markdown to PDF and back with advanced AI. Free, secure online tool with live preview and smart styling.',
+  description: 'Convert Markdown to PDF and back with advanced AI. Free, secure online converter with instant live preview, smart styling, and no sign-up required.',
   alternates: {
     canonical: 'https://markdownpdfconverter.com',
     languages: {
