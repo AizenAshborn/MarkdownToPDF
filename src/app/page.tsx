@@ -98,7 +98,7 @@ export default function Home() {
               </Button>
             </div>
 
-            <EditorWrapper />
+            <EditorClientWrapper />
 
             <Pricing />
 
