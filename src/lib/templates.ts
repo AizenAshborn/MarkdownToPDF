@@ -32,13 +32,15 @@ export const templates: PdfTemplate[] = [
       .preview-container a:hover { border-bottom-color: hsl(var(--accent)); }
       .preview-container code {
         font-family: 'JetBrains Mono', monospace;
-        background-color: hsl(var(--muted));
+        background-color: #f3f4f6;
+        color: #1f2937;
         padding: 0.2em 0.4em;
         border-radius: 4px;
         font-size: 0.9em;
       }
       .preview-container pre {
-        background-color: hsl(var(--muted));
+        background-color: #f3f4f6;
+        color: #1f2937;
         padding: 1em;
         border-radius: 8px;
         overflow-x: auto;
