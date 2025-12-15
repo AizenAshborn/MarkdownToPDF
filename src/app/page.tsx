@@ -17,7 +17,12 @@ import { Testimonials } from '@/components/testimonials';
 
 import { AdUnit } from '@/components/ad-unit';
 import { placeholderAds } from '@/lib/placeholder-images';
-import EditorWrapper from '@/components/editor-wrapper';
+import dynamic from 'next/dynamic';
+
+const Editor = dynamic(() => import('@/components/editor'), {
+  loading: () => <div className="h-[500px] w-full bg-muted/20 animate-pulse rounded-lg flex items-center justify-center text-muted-foreground">Loading Editor...</div>,
+  ssr: false
+});
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
