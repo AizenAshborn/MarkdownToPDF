@@ -46,7 +46,16 @@ const AppFooter = ({ ad, slotId }: AppFooterProps) => {
                         <ul className="space-y-2.5">
                             <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/markdown-resume-guide">Resume Builder</Link></li>
                             <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/pdf-templates">Business Proposals</Link></li>
-                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/mastering-markdown">Students & Papers</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/blog/mastering-markdown">Students &amp; Papers</Link></li>
+                        </ul>
+                    </div>
+                    <div className="space-y-3">
+                        <h3 className="text-sm font-medium">Company</h3>
+                        <ul className="space-y-2.5">
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/about">About Us</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/contact">Contact</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/privacy">Privacy Policy</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/terms">Terms of Service</Link></li>
                         </ul>
                     </div>
                     <div className="space-y-3">
