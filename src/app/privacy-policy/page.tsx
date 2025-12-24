@@ -40,14 +40,20 @@ export default function PrivacyPage() {
 
                     <h3>Cookies and Web Beacons</h3>
                     <p>
-                        markdownpdfconverter.com uses cookies to store information about visitors’ preferences and to optimize user experience by customizing our web page content based on visitors’ browser type or other information.
+                        markdownpdfconverter.com uses cookies to store information about visitors’ preferences and to optimize user experience by customizing our web page content based on visitors’ browser type or other information. These cookies may be used by third-party advertising partners, including Google, to display relevant advertisements.
                     </p>
 
                     <hr />
 
                     <h3>Google AdSense</h3>
                     <p>
-                        We use Google AdSense to serve ads. Google may use cookies to serve ads based on a user&apos;s visit to this site and other sites on the internet. Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
+                        We use Google AdSense to serve advertisements on this website. Google uses cookies, including the DoubleClick cookie, to serve ads to users based on their visit to this website and other websites on the Internet.
+                    </p>
+                    <p>
+                        Google’s use of advertising cookies enables it and its partners to serve ads based on users’ interests. Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
+                    </p>
+                    <p>
+                        You may also learn more about how Google manages data in advertising products by visiting <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google’s Privacy & Terms page</a>.
                     </p>
 
                     <hr />
