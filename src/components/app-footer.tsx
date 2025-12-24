@@ -50,26 +50,13 @@ const AppFooter = ({ ad, slotId }: AppFooterProps) => {
                         </ul>
                     </div>
                     <div className="space-y-3">
-                        <h3 className="text-sm font-medium">Community</h3>
-                        <div className="flex space-x-4">
-                            <Link href="https://github.com/AizenAshborn/MarkdownToPDF" target="_blank" className="text-muted-foreground hover:text-foreground">
-                                <Github className="h-5 w-5" />
-                                <span className="sr-only">GitHub</span>
-                            </Link>
-                            <Link href="#" className="text-muted-foreground hover:text-foreground">
-                                <Twitter className="h-5 w-5" />
-                                <span className="sr-only">Twitter</span>
-                            </Link>
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                            Built for developers, writers, and students. 100% Free & Private.
-                            <br />
-                            <Link href="/advertise" className="underline underline-offset-4 hover:text-primary">
-                                Advertise with us
-                            </Link>
-                            <br />
-                            © {new Date().getFullYear()} MarkdownPDFConverter. All rights reserved.
-                        </p>
+                        <h3 className="text-sm font-medium">Company</h3>
+                        <ul className="space-y-2.5">
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/about">About Us</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/contact">Contact Us</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/privacy-policy">Privacy Policy</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/terms">Terms of Service</Link></li>
+                        </ul>
                     </div>
                 </div>
             </div>
