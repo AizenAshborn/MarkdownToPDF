@@ -173,10 +173,15 @@ export default function Home() {
                       Markdown vs PDF: Choosing the Right Format
                     </Link>
                   </li>
-                  <li className="bg-background p-4 rounded-lg border border-border opacity-60 cursor-not-allowed">
-                    <span className="font-bold text-muted-foreground">
-                      Common Markdown Formatting Issues and Fixes (Coming Soon)
-                    </span>
+                  <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
+                    <Link href="/blog/markdown-formatting-fixes" className="font-bold no-underline hover:text-primary">
+                      Common Markdown Formatting Issues and Fixes
+                    </Link>
+                  </li>
+                  <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
+                    <Link href="/blog/technical-writing-with-markdown" className="font-bold no-underline hover:text-primary">
+                      Technical Writing with Markdown: A Beginner&apos;s Guide
+                    </Link>
                   </li>
                 </ul>
               </section>
