@@ -47,13 +47,7 @@ export default function PrivacyPage() {
 
                     <h3>Google AdSense</h3>
                     <p>
-                        Some of the ads on this site may be served by Google. Google uses cookies, including the DoubleClick cookie, to serve ads to users based on their visit to this website and other websites on the internet.
-                    </p>
-                    <p>
-                        Google’s use of advertising cookies enables it and its partners to serve ads based on users’ interests.
-                    </p>
-                    <p>
-                        Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
+                        We use Google AdSense to serve ads. Google may use cookies to serve ads based on a user&apos;s visit to this site and other sites on the internet. Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
                     </p>
 
                     <hr />

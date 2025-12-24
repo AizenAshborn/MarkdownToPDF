@@ -160,12 +160,12 @@ export default function Home() {
               </section>
 
               <section id="learn-more" className="bg-primary/5 p-8 rounded-2xl border border-primary/10">
-                <h2 className="mt-0">Learn More About Markdown and PDF Conversion</h2>
+                <h2 className="mt-0">Learn more about Markdown & PDF conversion</h2>
                 <p>Explore our in-depth guides to master document conversion and Markdown formatting:</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0">
                   <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
                     <Link href="/blog/how-to-convert-markdown-to-pdf" className="font-bold no-underline hover:text-primary">
-                      How to Convert Markdown to PDF (Step-by-Step Guide)
+                      How to Convert Markdown to PDF (Complete Guide)
                     </Link>
                   </li>
                   <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
