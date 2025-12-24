@@ -174,13 +174,23 @@ export default function Home() {
                     </Link>
                   </li>
                   <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
+                    <Link href="/blog/academic-writing-markdown" className="font-bold no-underline hover:text-primary">
+                      Mastering Academic Writing with Markdown
+                    </Link>
+                  </li>
+                  <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
+                    <Link href="/blog/markdown-security-privacy" className="font-bold no-underline hover:text-primary">
+                      Document Security: Why Client-Side Conversion Matters
+                    </Link>
+                  </li>
+                  <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
                     <Link href="/blog/markdown-formatting-fixes" className="font-bold no-underline hover:text-primary">
                       Common Markdown Formatting Issues and Fixes
                     </Link>
                   </li>
                   <li className="bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
-                    <Link href="/blog/technical-writing-with-markdown" className="font-bold no-underline hover:text-primary">
-                      Technical Writing with Markdown: A Beginner&apos;s Guide
+                    <Link href="/blog/pdf-optimization-guide" className="font-bold no-underline hover:text-primary">
+                      The Ultimate Guide to PDF Optimization and Accessibility
                     </Link>
                   </li>
                 </ul>
