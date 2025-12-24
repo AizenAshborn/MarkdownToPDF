@@ -1,6 +1,7 @@
 import AppHeader from '@/components/app-header';
 import AppFooter from '@/components/app-footer';
 import { Badge } from '@/components/ui/badge';
+import Link from "next/link";
 
 export const metadata = {
     title: 'Terms of Service | MarkdownPDFConverter',
