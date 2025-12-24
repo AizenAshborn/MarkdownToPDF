@@ -54,7 +54,7 @@ const AppFooter = ({ ad, slotId }: AppFooterProps) => {
                         <ul className="space-y-2.5">
                             <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/about">About Us</Link></li>
                             <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/contact">Contact</Link></li>
-                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/privacy">Privacy Policy</Link></li>
+                            <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/privacy-policy">Privacy Policy</Link></li>
                             <li><Link className="text-sm text-muted-foreground hover:text-foreground transition-colors" href="/terms">Terms of Service</Link></li>
                         </ul>
                     </div>
