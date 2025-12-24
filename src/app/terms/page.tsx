@@ -69,7 +69,7 @@ export default function TermsPage() {
                         <section>
                             <h2>5. Privacy</h2>
                             <p>
-                                Your use of the Service is also governed by our <a href="/privacy">Privacy Policy</a>. All document conversion happens in your browser—we do not store or access your document content.
+                                Your use of our services is also governed by our <Link href="/privacy-policy">Privacy Policy</Link>. Please review it to understand our practices. All document conversion happens in your browser—we do not store or access your document content.
                             </p>
                         </section>
 
