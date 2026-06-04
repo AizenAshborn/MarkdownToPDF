@@ -44,6 +44,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // --- ADD THIS SECTION ---
+  async rewrites() {
+    return [
+      {
+        source: '/century-timer',
+        destination: '/century-timer.html',
+      },
+    ];
+  },
+  // ------------------------
 };
 
 export default nextConfig;
