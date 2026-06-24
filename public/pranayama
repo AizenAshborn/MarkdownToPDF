@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pranayama Practice</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f7f5f0;
+    color: #1a1a18;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+  #app {
+    width: 100%;
+    max-width: 520px;
+  }
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888780;
+    margin-bottom: 1rem;
+  }
+  .step-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .step-tab {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #d3d1c7;
+    background: #fff;
+    color: #5f5e5a;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .step-tab.active {
+    background: #0f6e56;
+    border-color: #0f6e56;
+    color: #fff;
+    font-weight: 500;
+  }
+  .step-tab:hover:not(.active) {
+    background: #f1efe8;
+    border-color: #b4b2a9;
+  }
+  .step-info {
+    margin-bottom: 1.5rem;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a18;
+    margin-bottom: 5px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: #5f5e5a;
+    line-height: 1.6;
+  }
+  .circle-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .phase-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888780;
+    min-height: 18px;
+    text-align: center;
+    transition: color 0.3s;
+  }
+  .controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .btn-main {
+    padding: 10px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 24px;
+    border: 1px solid #d3d1c7;
+    background: #fff;
+    color: #1a1a18;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-main:hover { background: #f1efe8; }
+  .btn-main.running { background: #0f6e56; border-color: #0f6e56; color: #fff; }
+  .btn-reset {
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 24px;
+    border: 1px solid #e8e6de;
+    background: transparent;
+    color: #888780;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-reset:hover { background: #f1efe8; }
+  .ratio-area { margin-bottom: 1.25rem; }
+  .ratio-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888780;
+    margin-bottom: 0.75rem;
+  }
+  .ratio-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .ratio-lbl {
+    font-size: 12px;
+    color: #5f5e5a;
+    min-width: 90px;
+  }
+  .ratio-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a18;
+    min-width: 22px;
+    text-align: right;
+  }
+  input[type=range] {
+    flex: 1;
+    accent-color: #0f6e56;
+    height: 4px;
+    cursor: pointer;
+  }
+  .stats-bar {
+    background: #fff;
+    border: 1px solid #e8e6de;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 28px;
+    margin-bottom: 1.25rem;
+  }
+  .stat-val {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a18;
+    line-height: 1.1;
+  }
+  .stat-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888780;
+    margin-top: 2px;
+  }
+  .tip {
+    font-size: 12.5px;
+    color: #888780;
+    line-height: 1.7;
+    font-style: italic;
+    border-left: 2px solid #1d9e75;
+    padding-left: 12px;
+  }
+  svg text { font-family: Georgia, 'Times New Roman', serif; }
+</style>
+</head>
+<body>
+<div id="app">
+  <p class="eyebrow">Pranayama Practice</p>
+  <div class="step-tabs" id="stepTabs"></div>
+  <div class="step-info">
+    <div class="step-title" id="stepTitle"></div>
+    <div class="step-desc" id="stepDesc"></div>
+  </div>
+
+  <div class="circle-area">
+    <svg width="200" height="200" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="80" fill="none" stroke="#e8e6de" stroke-width="2"/>
+      <circle id="progressRing" cx="100" cy="100" r="80" fill="none" stroke="#1d9e75" stroke-width="3.5"
+        stroke-dasharray="502" stroke-dashoffset="502" stroke-linecap="round"
+        transform="rotate(-90 100 100)" style="transition: stroke-dashoffset 0.25s linear, stroke 0.4s;"/>
+      <circle cx="100" cy="100" r="60" fill="#f7f5f0"/>
+      <text id="svgCount" x="100" y="110" text-anchor="middle" font-size="40" fill="#1a1a18">—</text>
+    </svg>
+    <div class="phase-label" id="phaseLabel">ready</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-main" id="startBtn" onclick="toggleRun()">▶ begin</button>
+    <button class="btn-reset" onclick="resetSession()">↺ reset</button>
+  </div>
+
+  <div class="ratio-area" id="ratioArea"></div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-val" id="cycleCount">0</div><div class="stat-lbl">cycles</div></div>
+    <div class="stat"><div class="stat-val" id="elapsedTime">0:00</div><div class="stat-lbl">elapsed</div></div>
+    <div class="stat"><div class="stat-val" id="breathRate">—</div><div class="stat-lbl">breath / min</div></div>
+  </div>
+
+  <p class="tip" id="tipText"></p>
+</div>
+
+<script>
+const steps = [
+  {
+    name:"Ujjayi",
+    title:"Step 1 — Ujjayi (ocean breath)",
+    desc:"Inhale and exhale through the nose with a soft throat constriction, creating a gentle ocean sound. No holds.",
+    phaseKeys:["inhale","exhale"],
+    ratioSliders:false,
+    tip:"The slight throat resistance slows the breath naturally and draws attention inward. Let your eyes soften.",
+    colors:{inhale:"#1d9e75", exhale:"#0f6e56"}
+  },
+  {
+    name:"Sama Vritti",
+    title:"Step 2 — Equal breathing (Sama Vritti)",
+    desc:"Breathe in for 4 counts, breathe out for 4 counts. Let the mind ride the wave. Practice for 5 minutes.",
+    phaseKeys:["inhale","exhale"],
+    ratioSliders:true,
+    tip:"Equal ratio brings mental balance. If thoughts arise, simply return to counting.",
+    colors:{inhale:"#1d9e75", exhale:"#0f6e56"}
+  },
+  {
+    name:"Kumbhaka",
+    title:"Step 3 — Introducing the gap (Kumbhaka)",
+    desc:"Inhale → hold full → exhale → hold empty. Relax into each pause. Do not clench. Increase holds slowly over weeks.",
+    phaseKeys:["inhale","holdTop","exhale","holdBot"],
+    ratioSliders:true,
+    tip:"When holding, do not squeeze the throat or jaw. Hold by not breathing — not by gripping.",
+    colors:{inhale:"#1d9e75", holdTop:"#5dcaa5", exhale:"#0f6e56", holdBot:"#085041"}
+  },
+  {
+    name:"The Gap",
+    title:"Step 4 — The micro-gap (advanced)",
+    desc:"Stop counting. Let the breath slow to its own rhythm. Rest awareness entirely in the pause. Ask: who is aware of this stillness?",
+    phaseKeys:["inhale","holdTop","exhale","holdBot"],
+    ratioSliders:false,
+    tip:"Treat the inhale and exhale as doors that open and close to reveal the room of consciousness. You are what remains in the pause.",
+    colors:{inhale:"#1d9e75", holdTop:"#5dcaa5", exhale:"#0f6e56", holdBot:"#085041"}
+  }
+];
+const phaseNames = {inhale:"inhale", holdTop:"hold — full", exhale:"exhale", holdBot:"hold — empty"};
+let customCounts = [[4,4],[4,4],[4,2,4,2],[5,4,5,4]];
+let cur=0, running=false, phaseIdx=0, cycles=0, startTime=null, tickInterval=null, phaseTimer=null, elapsedTimer=null;
+
+function renderTabs(){
+  document.getElementById('stepTabs').innerHTML = steps.map((s,i)=>
+    `<button class="step-tab${i===cur?' active':''}" onclick="selectStep(${i})">${s.name}</button>`
+  ).join('');
+}
+function renderInfo(){
+  const s=steps[cur];
+  document.getElementById('stepTitle').textContent=s.title;
+  document.getElementById('stepDesc').textContent=s.desc;
+  document.getElementById('tipText').textContent=s.tip;
+  renderRatios();
+}
+function renderRatios(){
+  const s=steps[cur]; const area=document.getElementById('ratioArea');
+  if(!s.ratioSliders){area.innerHTML='';return;}
+  const counts=customCounts[cur];
+  area.innerHTML=`<p class="ratio-eyebrow">adjust counts</p>`+
+    s.phaseKeys.map((pk,i)=>`
+      <div class="ratio-row">
+        <span class="ratio-lbl">${phaseNames[pk]||pk}</span>
+        <input type="range" min="1" max="16" step="1" value="${counts[i]}" oninput="updateCount(${i},+this.value)"/>
+        <span class="ratio-val" id="cv${i}">${counts[i]}</span>
+      </div>`).join('');
+}
+function updateCount(i,v){
+  customCounts[cur][i]=v;
+  document.getElementById('cv'+i).textContent=v;
+}
+function selectStep(i){
+  if(running)stopSession();
+  cur=i; phaseIdx=0; cycles=0;
+  renderTabs(); renderInfo();
+  resetDisplay();
+}
+function resetDisplay(){
+  document.getElementById('svgCount').textContent='—';
+  document.getElementById('phaseLabel').textContent='ready';
+  setRing(0,'#1d9e75');
+  document.getElementById('cycleCount').textContent='0';
+  document.getElementById('elapsedTime').textContent='0:00';
+  document.getElementById('breathRate').textContent='—';
+}
+function toggleRun(){ running?stopSession():startSession(); }
+function startSession(){
+  running=true;
+  if(!startTime) startTime=Date.now();
+  const btn=document.getElementById('startBtn');
+  btn.textContent='⏸ pause'; btn.classList.add('running');
+  startElapsedTimer(); runPhase();
+}
+function stopSession(){
+  running=false;
+  clearTimeout(phaseTimer); clearInterval(elapsedTimer); clearInterval(tickInterval);
+  const btn=document.getElementById('startBtn');
+  btn.textContent='▶ resume'; btn.classList.remove('running');
+}
+function resetSession(){
+  stopSession();
+  phaseIdx=0; cycles=0; startTime=null;
+  const btn=document.getElementById('startBtn');
+  btn.textContent='▶ begin'; btn.classList.remove('running');
+  resetDisplay();
+}
+function runPhase(){
+  if(!running)return;
+  const s=steps[cur]; const counts=customCounts[cur];
+  const pk=s.phaseKeys[phaseIdx]; const total=counts[phaseIdx];
+  const color=s.colors[pk]||'#1d9e75';
+  let c=0;
+  document.getElementById('phaseLabel').textContent=phaseNames[pk]||pk;
+  setRing(0,color); clearInterval(tickInterval);
+  tickInterval=setInterval(()=>{
+    if(!running){clearInterval(tickInterval);return;}
+    c++;
+    document.getElementById('svgCount').textContent=c;
+    setRing(c/total,color);
+    if(c>=total){
+      clearInterval(tickInterval);
+      phaseIdx=(phaseIdx+1)%s.phaseKeys.length;
+      if(phaseIdx===0){cycles++;document.getElementById('cycleCount').textContent=cycles;updateBreathRate();}
+      phaseTimer=setTimeout(runPhase,220);
+    }
+  },1000);
+}
+function setRing(frac,color){
+  const circ=2*Math.PI*80; const ring=document.getElementById('progressRing');
+  ring.style.strokeDashoffset=circ*(1-frac); ring.style.stroke=color;
+}
+function startElapsedTimer(){
+  clearInterval(elapsedTimer);
+  elapsedTimer=setInterval(()=>{
+    if(!startTime)return;
+    const s=Math.floor((Date.now()-startTime)/1000);
+    document.getElementById('elapsedTime').textContent=Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
+  },1000);
+}
+function updateBreathRate(){
+  if(!startTime||cycles<1)return;
+  const elapsed=(Date.now()-startTime)/60000;
+  document.getElementById('breathRate').textContent=Math.round(cycles/elapsed);
+}
+renderTabs(); renderInfo(); resetDisplay();
+</script>
+</body>
+</html>
