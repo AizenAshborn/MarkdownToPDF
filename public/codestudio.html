@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code preview studio</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --surface-2: #f3f2ec;
+    --border: #e2e0d8;
+    --text: #1c1c1a;
+    --text-secondary: #5f5e5a;
+    --text-muted: #888780;
+    --accent: #0f6e56;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 32px 16px;
+    display: flex;
+    justify-content: center;
+  }
+  .app {
+    width: 100%;
+    max-width: 900px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+  .header-left { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .title { font-size: 13px; font-weight: 500; letter-spacing: 0.2px; }
+  .lang-badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    display: none;
+  }
+  .drop-zone { transition: background 0.15s, border-color 0.15s; }
+  .drop-zone.drag { background: #f0efe9; }
+  textarea#code-input {
+    width: 100%;
+    min-height: 160px;
+    max-height: 320px;
+    resize: vertical;
+    border: none;
+    outline: none;
+    padding: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: transparent;
+    color: var(--text);
+    display: block;
+  }
+  textarea#code-input::placeholder { color: #9a988e; }
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+  }
+  button, select, input[type="text"] {
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .btn:hover { background: #efeee7; }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .btn:disabled:hover { background: #fff; }
+  .btn-primary {
+    background: var(--text);
+    color: #fff;
+    border: 1px solid var(--text);
+  }
+  .btn-primary:hover { background: #2e2e2c; }
+  .btn-primary:disabled:hover { background: var(--text); }
+  select#lang-select {
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+  }
+  input#filename-input {
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    width: 120px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  select:focus, input:focus, textarea:focus { outline: none; border-color: var(--text); }
+  .ext-label {
+    color: var(--text-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin-left: -4px;
+    font-size: 13px;
+  }
+  .spacer { flex: 1; }
+  .viewer-section { display: none; background: #fff; }
+  .tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px 0;
+  }
+  .tab {
+    font-weight: 500;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom: 2px solid var(--text); }
+  .tab:disabled { opacity: 0.4; cursor: default; }
+  .no-preview-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+    padding-right: 4px;
+    align-self: center;
+  }
+  .viewer-body { border-top: 1px solid var(--border); }
+  iframe#preview-frame {
+    width: 100%;
+    height: 420px;
+    border: none;
+    display: block;
+    background: #fff;
+  }
+  pre#code-view {
+    margin: 0;
+    padding: 16px;
+    max-height: 420px;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: var(--bg);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .tok-kw { color: #185fa5; }
+  .tok-string { color: #0f6e56; }
+  .tok-comment { color: #888780; font-style: italic; }
+  .tok-num { color: #993c1d; }
+  .tok-tag { color: #993556; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="header-left">
+      <span class="dot"></span>
+      <span class="title">Code preview studio</span>
+    </div>
+    <span class="lang-badge" id="lang-badge"></span>
+  </div>
+
+  <div class="drop-zone" id="drop-zone">
+    <textarea id="code-input" placeholder="Paste your code here, or drag a file in..." spellcheck="false"></textarea>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="upload-btn" type="button">
+      <i class="ti ti-upload"></i> Upload file
+    </button>
+    <input type="file" id="file-input" style="display:none">
+
+    <select id="lang-select"></select>
+
+    <input type="text" id="filename-input" placeholder="filename">
+    <span class="ext-label" id="ext-label">.txt</span>
+
+    <div class="spacer"></div>
+
+    <button class="btn" id="copy-btn" type="button" disabled>
+      <i class="ti ti-copy"></i> Copy
+    </button>
+    <button class="btn" id="clear-btn" type="button" disabled>
+      <i class="ti ti-trash"></i> Clear
+    </button>
+    <button class="btn btn-primary" id="download-btn" type="button" disabled>
+      <i class="ti ti-download"></i> <span id="download-label">Download .txt</span>
+    </button>
+  </div>
+
+  <div class="viewer-section" id="viewer-section">
+    <div class="tabs">
+      <button class="tab active" id="tab-preview" type="button">Preview</button>
+      <button class="tab" id="tab-code" type="button">Formatted code</button>
+      <span class="no-preview-note" id="no-preview-note" style="display:none;">No live preview for this type — showing formatted code</span>
+    </div>
+    <div class="viewer-body">
+      <iframe id="preview-frame" title="preview" sandbox="allow-scripts allow-same-origin"></iframe>
+      <pre id="code-view" style="display:none;"><code id="code-view-inner"></code></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- language table ----------
+const LANGS = {
+  html: { ext: "html", label: "HTML", mime: "text/html" },
+  css: { ext: "css", label: "CSS", mime: "text/css" },
+  javascript: { ext: "js", label: "JavaScript", mime: "text/javascript" },
+  typescript: { ext: "ts", label: "TypeScript", mime: "text/typescript" },
+  jsx: { ext: "jsx", label: "JSX", mime: "text/jsx" },
+  json: { ext: "json", label: "JSON", mime: "application/json" },
+  python: { ext: "py", label: "Python", mime: "text/x-python" },
+  markdown: { ext: "md", label: "Markdown", mime: "text/markdown" },
+  svg: { ext: "svg", label: "SVG", mime: "image/svg+xml" },
+  yaml: { ext: "yaml", label: "YAML", mime: "text/yaml" },
+  sql: { ext: "sql", label: "SQL", mime: "text/x-sql" },
+  shell: { ext: "sh", label: "Shell", mime: "text/x-sh" },
+  xml: { ext: "xml", label: "XML", mime: "text/xml" },
+  csv: { ext: "csv", label: "CSV", mime: "text/csv" },
+  plaintext: { ext: "txt", label: "Plain text", mime: "text/plain" },
+};
+const PREVIEWABLE = new Set(["html", "svg", "markdown", "json", "csv"]);
+
+// ---------- detection ----------
+function detectLanguage(code) {
+  const trimmed = code.trim();
+  if (!trimmed) return null;
+  const scores = {};
+  const bump = (lang, n) => { scores[lang] = (scores[lang] || 0) + n; };
+
+  if (/^\s*<!doctype html/i.test(trimmed)) bump("html", 10);
+  if (/<html[\s>]/i.test(trimmed)) bump("html", 6);
+  if (/<\/(div|span|body|head|p|a|img|script|style)>/i.test(trimmed)) bump("html", 3);
+  if (/<svg[\s>]/i.test(trimmed) && /<\/svg>/i.test(trimmed)) bump("svg", 10);
+  if (/^\s*<\?xml/i.test(trimmed)) bump("xml", 6);
+  if (/<[a-zA-Z][\w-]*\/?>(?!.*<\/?(html|body|head)[\s>])/i.test(trimmed) && !/<svg/i.test(trimmed) && /<\/[a-zA-Z]/.test(trimmed)) bump("xml", 1);
+
+  try {
+    JSON.parse(trimmed);
+    bump("json", 10);
+  } catch (e) {
+    if (/^[\[{]/.test(trimmed) && /[\]}]\s*$/.test(trimmed) && /"[\w-]+"\s*:/.test(trimmed)) bump("json", 3);
+  }
+
+  if (/^\s*(import|export)\s.+from\s+['"]/m.test(trimmed)) bump("javascript", 4);
+  if (/\breturn\s*\(?\s*</.test(trimmed) || /<\/?[A-Z][\w.]*[\s/>]/.test(trimmed)) bump("jsx", 5);
+  if (/:\s*(string|number|boolean|void|any|unknown)\b/.test(trimmed) || /interface\s+\w+\s*{/.test(trimmed) || /:\s*\w+(\[\])?\s*[,)=]/.test(trimmed)) bump("typescript", 4);
+  if (/\b(const|let|var|function)\s+\w+\s*=?/.test(trimmed) || /=>\s*{?/.test(trimmed) || /console\.log\(/.test(trimmed)) bump("javascript", 3);
+  if (/\brequire\(['"]/.test(trimmed) || /module\.exports/.test(trimmed)) bump("javascript", 2);
+
+  if (/^\s*(from|import)\s+[\w.]+\s+import\s|^\s*def\s+\w+\(.*\):|^\s*class\s+\w+.*:\s*$/m.test(trimmed)) bump("python", 6);
+  if (/print\(.+\)/.test(trimmed) && /:\s*$/m.test(trimmed)) bump("python", 3);
+  if (/^\s*(if|for|while)\s.+:\s*$/m.test(trimmed) && !/[{};]/.test(trimmed)) bump("python", 2);
+
+  if (/^\s*[.#]?[\w-]+\s*{[\s\S]*}/.test(trimmed) && /:[^;{}]+;/.test(trimmed) && !/function|const|let|=>/.test(trimmed)) bump("css", 6);
+  if (/@media|@import|@keyframes/.test(trimmed)) bump("css", 4);
+
+  if (/^#{1,6}\s+.+/m.test(trimmed) || (/^\s*[-*+]\s+.+/m.test(trimmed) && /\n#{1,6}\s/.test(trimmed))) bump("markdown", 3);
+  if (/\[.+\]\(.+\)/.test(trimmed) && /^#{1,6}\s/m.test(trimmed)) bump("markdown", 5);
+  if (/^```/m.test(trimmed)) bump("markdown", 4);
+
+  if (/^\s*[\w-]+:\s*.+$/m.test(trimmed) && /^---/m.test(trimmed)) bump("yaml", 5);
+  if (/^\s*[\w-]+:\s*[^:\n]+$/m.test(trimmed) && !/[{};]/.test(trimmed) && /\n\s+[\w-]+:/.test(trimmed)) bump("yaml", 3);
+
+  if (/\b(SELECT|INSERT|UPDATE|DELETE|CREATE TABLE)\b/i.test(trimmed) && /\bFROM\b|\bVALUES\b|\bWHERE\b/i.test(trimmed)) bump("sql", 6);
+
+  if (/^#!\/bin\/(bash|sh)/.test(trimmed)) bump("shell", 8);
+  if (/^\s*(sudo|echo|export|cd|mkdir|npm|pip|git)\s/m.test(trimmed) && trimmed.split("\n").length < 40) bump("shell", 2);
+
+  if (/^[^,\n]+,[^,\n]+(,[^,\n]*)*\n([^,\n]+,[^,\n]+(,[^,\n]*)*\n?)+$/.test(trimmed) && trimmed.split("\n")[0].split(",").length > 1) bump("csv", 4);
+
+  let best = null, bestScore = 0;
+  for (const [lang, score] of Object.entries(scores)) {
+    if (score > bestScore) { best = lang; bestScore = score; }
+  }
+  if (!best || bestScore < 2) return "plaintext";
+  return best;
+}
+
+// ---------- preview doc builders ----------
+function buildPreviewDoc(lang, code) {
+  if (lang === "html") return code;
+  if (lang === "svg") {
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      html,body{margin:0;height:100%;display:flex;align-items:center;justify-content:center;background:#fafaf9;}
+      svg{max-width:92%;max-height:92%;}
+    </style></head><body>${code}</body></html>`;
+  }
+  if (lang === "markdown") {
+    const escaped = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    let html = escaped
+      .replace(/^###### (.*)$/gm, "<h6>$1</h6>")
+      .replace(/^##### (.*)$/gm, "<h5>$1</h5>")
+      .replace(/^#### (.*)$/gm, "<h4>$1</h4>")
+      .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+      .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+      .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/`(.+?)`/g, "<code>$1</code>")
+      .replace(/^\s*[-*+]\s+(.*)$/gm, "<li>$1</li>")
+      .replace(/(<li>.*<\/li>\n?)+/g, (m) => `<ul>${m}</ul>`)
+      .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
+      .split(/\n{2,}/)
+      .map((block) => (/^\s*<(h\d|ul|li)/.test(block.trim()) ? block : `<p>${block}</p>`))
+      .join("\n");
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;max-width:720px;margin:2.5rem auto;padding:0 1.5rem;line-height:1.65;color:#1c1c1a;}
+      h1,h2,h3{font-weight:600;line-height:1.3;}
+      code{background:#f0efe9;padding:0.15em 0.4em;border-radius:4px;font-size:0.9em;}
+      a{color:#0c447c;}
+    </style></head><body>${html}</body></html>`;
+  }
+  if (lang === "json") {
+    let pretty = code;
+    try { pretty = JSON.stringify(JSON.parse(code), null, 2); } catch (e) {}
+    const escaped = pretty.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      body{margin:0;padding:1.5rem;background:#fafaf9;}
+      pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.6;color:#1c1c1a;white-space:pre-wrap;word-break:break-word;margin:0;}
+    </style></head><body><pre>${escaped}</pre></body></html>`;
+  }
+  if (lang === "csv") {
+    const rows = code.trim().split("\n").map((r) => r.split(","));
+    const [head, ...body] = rows;
+    const th = head.map((c) => `<th>${c.trim()}</th>`).join("");
+    const trs = body.map((r) => `<tr>${r.map((c) => `<td>${c.trim()}</td>`).join("")}</tr>`).join("");
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      body{font-family:-apple-system,sans-serif;margin:0;padding:1.5rem;background:#fafaf9;}
+      table{border-collapse:collapse;width:100%;font-size:13px;}
+      th,td{border:1px solid #e2e0d8;padding:6px 10px;text-align:left;}
+      th{background:#f0efe9;font-weight:600;}
+      tr:nth-child(even){background:#f7f6f1;}
+    </style></head><body><table><thead><tr>${th}</tr></thead><tbody>${trs}</tbody></table></body></html>`;
+  }
+  return code;
+}
+
+// ---------- highlighter ----------
+function highlight(code, lang) {
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  let src = esc(code);
+
+  if (["javascript", "typescript", "jsx", "json"].includes(lang)) {
+    src = src
+      .replace(/(\/\/.*$)/gm, '<span class="tok-comment">$1</span>')
+      .replace(/(&quot;.*?&quot;|'.*?'|`.*?`)/g, '<span class="tok-string">$1</span>')
+      .replace(/\b(const|let|var|function|return|if|else|for|while|import|from|export|default|class|extends|new|async|await|try|catch|typeof|interface|type)\b/g, '<span class="tok-kw">$1</span>')
+      .replace(/\b(\d+\.?\d*)\b/g, '<span class="tok-num">$1</span>');
+  } else if (lang === "python") {
+    src = src
+      .replace(/(#.*$)/gm, '<span class="tok-comment">$1</span>')
+      .replace(/(&quot;.*?&quot;|'.*?')/g, '<span class="tok-string">$1</span>')
+      .replace(/\b(def|return|if|elif|else|for|while|import|from|class|try|except|as|with|in|not|and|or|None|True|False|self)\b/g, '<span class="tok-kw">$1</span>');
+  } else if (lang === "html" || lang === "xml" || lang === "svg") {
+    src = src.replace(/(&lt;\/?[\w-]+)/g, '<span class="tok-tag">$1</span>');
+  } else if (lang === "css") {
+    src = src
+      .replace(/([.#]?[\w-]+)(\s*{)/g, '<span class="tok-tag">$1</span>$2')
+      .replace(/([\w-]+)(\s*:)/g, '<span class="tok-kw">$1</span>$2');
+  } else if (lang === "sql") {
+    src = src.replace(/\b(SELECT|FROM|WHERE|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|JOIN|ON|AND|OR|ORDER BY|GROUP BY)\b/gi, '<span class="tok-kw">$1</span>');
+  } else if (lang === "yaml") {
+    src = src.replace(/^(\s*[\w-]+)(:)/gm, '<span class="tok-kw">$1</span>$2');
+  } else if (lang === "shell") {
+    src = src.replace(/^(#!.*)$/m, '<span class="tok-comment">$1</span>')
+      .replace(/(#.*$)/gm, '<span class="tok-comment">$1</span>')
+      .replace(/\b(sudo|echo|export|cd|mkdir|npm|pip|git|cat|ls)\b/g, '<span class="tok-kw">$1</span>');
+  } else if (lang === "markdown") {
+    src = src
+      .replace(/^(#{1,6}\s.+)$/gm, '<span class="tok-kw">$1</span>')
+      .replace(/(\*\*.+?\*\*)/g, '<span class="tok-string">$1</span>');
+  }
+  return src;
+}
+
+// ---------- app state / wiring ----------
+const el = (id) => document.getElementById(id);
+const codeInput = el("code-input");
+const dropZone = el("drop-zone");
+const fileInput = el("file-input");
+const uploadBtn = el("upload-btn");
+const langSelect = el("lang-select");
+const filenameInput = el("filename-input");
+const extLabel = el("ext-label");
+const langBadge = el("lang-badge");
+const copyBtn = el("copy-btn");
+const clearBtn = el("clear-btn");
+const downloadBtn = el("download-btn");
+const downloadLabel = el("download-label");
+const viewerSection = el("viewer-section");
+const tabPreview = el("tab-preview");
+const tabCode = el("tab-code");
+const noPreviewNote = el("no-preview-note");
+const previewFrame = el("preview-frame");
+const codeView = el("code-view");
+const codeViewInner = el("code-view-inner");
+
+let manualLang = null;
+let currentView = "preview";
+
+// populate language select
+for (const [key, l] of Object.entries(LANGS)) {
+  const opt = document.createElement("option");
+  opt.value = key;
+  opt.textContent = l.label;
+  langSelect.appendChild(opt);
+}
+
+function currentLang() {
+  const detected = detectLanguage(codeInput.value);
+  return manualLang || detected || "plaintext";
+}
+
+function render() {
+  const code = codeInput.value;
+  const hasCode = code.trim().length > 0;
+  const lang = currentLang();
+  const meta = LANGS[lang];
+  const canPreview = PREVIEWABLE.has(lang) && hasCode;
+
+  // badge
+  if (hasCode) {
+    langBadge.style.display = "inline-block";
+    langBadge.textContent = meta.label + (manualLang ? " · manual" : "");
+  } else {
+    langBadge.style.display = "none";
+  }
+
+  // select follows detected/manual lang without fighting user interaction
+  if (langSelect.value !== lang) langSelect.value = lang;
+
+  // filename ext
+  extLabel.textContent = "." + meta.ext;
+  downloadLabel.textContent = "Download ." + meta.ext;
+
+  // toolbar buttons
+  copyBtn.disabled = !hasCode;
+  clearBtn.disabled = !hasCode;
+  downloadBtn.disabled = !hasCode;
+
+  // viewer
+  viewerSection.style.display = hasCode ? "block" : "none";
+  tabPreview.disabled = !canPreview;
+  noPreviewNote.style.display = canPreview ? "none" : (hasCode ? "inline" : "none");
+
+  if (!hasCode) return;
+
+  if (!canPreview && currentView === "preview") currentView = "code";
+
+  tabPreview.classList.toggle("active", currentView === "preview");
+  tabCode.classList.toggle("active", currentView === "code");
+
+  if (currentView === "preview" && canPreview) {
+    previewFrame.style.display = "block";
+    codeView.style.display = "none";
+    let doc = "";
+    try { doc = buildPreviewDoc(lang, code); } catch (e) { doc = ""; }
+    previewFrame.srcdoc = doc;
+  } else {
+    previewFrame.style.display = "none";
+    codeView.style.display = "block";
+    codeViewInner.innerHTML = highlight(code, lang);
+  }
+}
+
+codeInput.addEventListener("input", () => {
+  manualLang = null;
+  render();
+});
+
+langSelect.addEventListener("change", () => {
+  manualLang = langSelect.value;
+  render();
+});
+
+uploadBtn.addEventListener("click", () => fileInput.click());
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    codeInput.value = e.target.result;
+    manualLang = null;
+    const parts = file.name.split(".");
+    filenameInput.value = parts.length > 1 ? parts.slice(0, -1).join(".") : file.name;
+    render();
+  };
+  reader.readAsText(file);
+}
+
+fileInput.addEventListener("change", (e) => {
+  const f = e.target.files && e.target.files[0];
+  if (f) loadFile(f);
+  e.target.value = "";
+});
+
+dropZone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZone.classList.add("drag");
+});
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag"));
+dropZone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("drag");
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) loadFile(f);
+});
+
+copyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(codeInput.value);
+    const original = copyBtn.innerHTML;
+    copyBtn.innerHTML = '<i class="ti ti-check"></i> Copied';
+    setTimeout(() => { copyBtn.innerHTML = original; }, 1500);
+  } catch (e) {}
+});
+
+clearBtn.addEventListener("click", () => {
+  codeInput.value = "";
+  filenameInput.value = "";
+  manualLang = null;
+  render();
+});
+
+downloadBtn.addEventListener("click", () => {
+  const lang = currentLang();
+  const meta = LANGS[lang];
+  const blob = new Blob([codeInput.value], { type: meta.mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const base = filenameInput.value.trim() || "code";
+  a.href = url;
+  a.download = base + "." + meta.ext;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+tabPreview.addEventListener("click", () => { currentView = "preview"; render(); });
+tabCode.addEventListener("click", () => { currentView = "code"; render(); });
+
+render();
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+</body>
+</html>
